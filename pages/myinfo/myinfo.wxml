@@ -4,10 +4,12 @@
       <image mode="aspectFill" src="/static/images/icon/backGround.png" style="height: 150px" class="loginbg"></image>
       <image class="user-face" src="{{userInfo.avatarUrl}}"></image>
       <view class='user-info'>
-        <text>{{userInfo.nickName}}</text>
-        <image wx:if="{{userInfo.gender == 1}}" src="/static/images/m3.png"></image>
-        <image wx:if="{{userInfo.gender == 2}}" src="/static/images/w3.png"></image>
-        <image wx:if="{{userInfo.gender == 0 || userInfo.gender==''}}" src="/static/images/sex.png"></image>
+        <!-- <text>{{userInfo.nickName}}</text> -->
+        <text>薄焕仕</text>
+        <!-- <image wx:if="{{userInfo.gender == 1}}" src="/static/images/m3.png"></image> -->
+        <!-- <image wx:if="{{userInfo.gender == 2}}" src="/static/images/w3.png"></image> -->
+        <!-- <image wx:if="{{userInfo.gender == 0 || userInfo.gender==''}}" src="/static/images/sex.png"></image> -->
+        <image src="/static/images/m3.png"></image>
       </view>
     </view>
     <view style='background-color: #fff;' class='bottom-box'>
@@ -36,6 +38,10 @@
       <view class="itemself" bindtap="click_myCollection" data-index="3">
         <image src="/static/images/icon/status.png" class="itemself_ico"></image>
         <span>我的收藏</span>
+      </view>
+      <view class="itemself" bindtap="click_myCollection" data-index="3">
+        <image src="/static/images/icon/status.png" class="itemself_ico"></image>
+        <span>我的消息</span>
       </view>
     </view>
   </view>
