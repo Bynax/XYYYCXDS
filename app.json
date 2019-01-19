@@ -9,18 +9,12 @@
     "pages/message/message",
     "pages/logs/logs",
     "pages/updAct/updAct",
-    "pages/my/projectbrief/projectbrief",
-    "pages/my/aboutus/aboutus",
     "pages/my/myjoin/myjoin",
     "pages/my/mylaunch/mylaunch",
     "pages/my/mycollection/mycollection",
-    "pages/my/issues/issues",
     "pages/my/more/more",
     "pages/my/logs/logs",
-    "pages/me/myinfo",
-    "pages/detail2",
-    "pages/auth",
-    "pages/updata_info"
+    "pages/myinfo/myinfo"
   ],
   "window": {
     "navigationBarTextStyle": "white",
@@ -47,7 +41,7 @@
         "selectedIconPath": "static/images/tar-about-on.png"
       },
       {
-        "pagePath": "pages/me/myinfo",
+        "pagePath": "pages/myinfo/myinfo",
         "text": "我的",
         "iconPath": "static/images/me.png",
         "selectedIconPath": "static/images/me-on.png"

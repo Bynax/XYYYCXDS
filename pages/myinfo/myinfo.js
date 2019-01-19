@@ -3,7 +3,7 @@ var common = require('../../utils/common.js')
 var Bmob = require("../../utils/bmob.js");
 var util = require('../../utils/util.js');
 var app = getApp()
-var curIndex  = 0 ;
+var curIndex = 0;
 var that;
 const MENU_WIDTH_SCALE = 0.82;
 const FAST_SPEED_SECOND = 300;
@@ -19,14 +19,14 @@ Page({
     // my_sex: my_sex,
     // my_avatar: my_avatar,
     // userInfo: [],
-    dialog:false,
-    autoplay:false,
+    dialog: false,
+    autoplay: false,
     ui: {
       windowWidth: 0,
       menuWidth: 0,
       offsetLeft: 0,
       tStart: true
-      
+
     },
     buttonClicked: false, //是否点击跳转
     //--------首页显示内容---------
@@ -41,27 +41,27 @@ Page({
     curIndex: 0,
     windowHeight1: 0,
     windowWidth1: 0,
-    
+
   },
 
   //首页切换图片
-  onSwiperChange:function(event) {
+  onSwiperChange: function (event) {
     curIndex = event.detail.current
     this.changeCurIndex()
   },
-  changeCurIndex:function(){
+  changeCurIndex: function () {
     this.setData({
-      curIndex:curIndex
+      curIndex: curIndex
     })
   },
-  onHide:function(){
+  onHide: function () {
     this.setData({
-      autoplay:false
+      autoplay: false
     })
   },
 
   //到地图模式
-  gotoMap:function(){
+  gotoMap: function () {
     if (!this.buttonClicked) {
       util.buttonClicked(this);
       wx.navigateTo({
@@ -92,7 +92,7 @@ Page({
     //this.onLoad();
     console.log('加载头像')
     var that = this
-   
+
     // app.getUserInfo(function (userInfo) {
     //   that.setData({
     //     userInfo: userInfo
@@ -126,7 +126,7 @@ Page({
     self = this;
     var Diary = Bmob.Object.extend("Events");
     var query = new Bmob.Query(Diary);
-    query.equalTo("isShow",1); //只统计公开显示的活动
+    query.equalTo("isShow", 1); //只统计公开显示的活动
     query.count({
       success: function (count) {
         var totalPage = 0;
@@ -179,15 +179,15 @@ Page({
           var liker = results[i].get("liker");
           var isLike = 0;
           var commentnum = results[i].get("commentnum");
-          
+
           var id = results[i].id;
           var createdAt = results[i].createdAt;
           var pubtime = util.getDateDiff(createdAt);
           var _url
           var actpic = results[i].get("actpic");
-          if(actpic){
+          if (actpic) {
             _url = results[i].get("actpic")._url;
-          }else {
+          } else {
             _url = "http://bmob-cdn-14867.b0.upaiyun.com/2017/12/01/89a6eba340008dce801381c4550787e4.png";
           }
           var publisherName = results[i].get("publisher").nickname;
@@ -217,7 +217,7 @@ Page({
         self.setData({
           postsShowSwiperList: molist
         })
-       self.fetchPostsData(self.data); //加载首页信息
+        self.fetchPostsData(self.data); //加载首页信息
       },
       error: function (error) {
         console.log(error)
@@ -235,7 +235,7 @@ Page({
     query.equalTo("isShow", 1); //公开显示的
     query.limit(self.data.limitPage);
     console.log(self.data.limitPage);
-    query.skip( 3 * self.data.currentPage);
+    query.skip(3 * self.data.currentPage);
     query.descending("createdAt"); //按照时间降序
     query.include("publisher");
     query.find({
@@ -314,9 +314,9 @@ Page({
     self.setData({
       currentPage: self.data.currentPage + 1
     });
-    console.log("当前页"+self.data.currentPage);
+    console.log("当前页" + self.data.currentPage);
     //先判断是不是最后一页
-    if (self.data.currentPage + 1 == self.data.totalPage){
+    if (self.data.currentPage + 1 == self.data.totalPage) {
       self.setData({
         isEmpty: true
       })
@@ -326,7 +326,7 @@ Page({
         })
       }
       this.fetchPostsData(self.data);
-    }else{
+    } else {
       this.fetchPostsData(self.data);
     }
   },
@@ -349,7 +349,7 @@ Page({
     })
     this.onShow();
   },
- 
+
   // 点击活动进入活动详情页面
   click_activity: function (e) {
     if (!this.buttonClicked) {
@@ -366,7 +366,7 @@ Page({
   click_search: function () {
     if (!this.buttonClicked) {
       util.buttonClicked(this);
-      console.log(getCurrentPages()) 
+      console.log(getCurrentPages())
       wx.navigateTo({
         url: '/pages/search/search',
       });
@@ -410,7 +410,7 @@ Page({
   },
 
   //进入反馈建议
-  click_Tick:function(){
+  click_Tick: function () {
     if (!this.buttonClicked) {
       util.buttonClicked(this);
       wx.navigateTo({
@@ -420,7 +420,7 @@ Page({
   },
 
   //进入更多信息
-  click_more:function(){
+  click_more: function () {
     if (!this.buttonClicked) {
       util.buttonClicked(this);
       wx.navigateTo({
@@ -452,7 +452,7 @@ Page({
     this.startX = clientX;
     this.data.ui.tStart = true;
     this.setData({ ui: this.data.ui })
-   
+
   },
   handlerMove(e) {
     let { clientX } = e.touches[0];
@@ -466,7 +466,7 @@ Page({
       ui.offsetLeft = ui.menuWidth;
     }
     this.setData({ ui: ui })
-    
+
   },
   handlerCancel(e) {
     // console.log(e);
@@ -499,14 +499,14 @@ Page({
       }
     }
     this.setData({ ui: ui })
-   
+
   },
   handlerPageTap(e) {
     let { ui } = this.data;
     if (ui.offsetLeft != 0) {
       ui.offsetLeft = 0;
       this.setData({ ui: ui })
-     
+
     }
   },
   handlerAvatarTap(e) {
