@@ -113,7 +113,7 @@
         </label>
       </checkbox-group>
       <view class="submit-btn">
-        <button class='button' loading="{{isLoading}}" hover-start-time="200" disabled="{{isdisabled}}" formType="submit">发起</button>
+        <button class='button' loading="{{isLoading}}" hover-start-time="200" disabled="{{isdisabled}}" formType="submit">提交</button>
       </view>
     </view>
   </form>
@@ -122,7 +122,7 @@
 <view class="notice" id="notice" wx:if="{{notice_status}}" bindtap="tapNotice">
         <view class="box">
           <view class="box-hd">
-            <text class="box-title">发起须知</text>
+            <text class="box-title">活动须知</text>
             <image class="box-close" src="/static/images/more/close.png" bindtap="hideNotice"></image>
           </view>
           <view class="box-bd">

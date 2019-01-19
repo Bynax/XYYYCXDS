@@ -13,5 +13,6 @@ $RECYCLE.BIN/
 # Node.js
 node_modules/
 
-# 隐藏配置文件
-utils
+# ignore utils directory
+utils/
+
