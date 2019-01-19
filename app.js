@@ -3,7 +3,7 @@ import Touches from './utils/Touches.js'
 var Bmob = require("utils/bmob.js");
 var common = require("utils/common.js");
 const __utils = require('utils/util')
-Bmob.initialize("9f1068e931203bfa908f26353f9d8080", "396e699e6cda7e452ef36e9effe5ef35");
+Bmob.initialize("9f1068e931203bf08f26353f9d8080", "396e699e6cda452ef36e9effe5ef35");
 App({
   version: 'v2.2.4', //版本号
   onLaunch: function () {

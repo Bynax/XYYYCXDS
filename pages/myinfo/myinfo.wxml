@@ -12,7 +12,7 @@
         <image src="/static/images/m3.png"></image>
       </view>
     </view>
-    <view style='background-color: #fff;' class='bottom-box'>
+    <!-- <view style='background-color: #fff;' class='bottom-box'>
       <view class="list-box">
         <view class="icon-text">
           <span>步数</span>
@@ -25,8 +25,8 @@
         </view>
         <text>21</text>
       </view>
-    </view>
-    <view class="thirdblock" style='margin-top:80px;'>
+    </view> -->
+    <view class="thirdblock" style='margin-top:40px;'>
       <view class="itemself" bindtap="click_myLaunch" data-index="1">
         <image src="/static/images/icon/times.png" class="itemself_ico"></image>
         <span>我的活动</span>

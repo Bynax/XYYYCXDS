@@ -277,7 +277,7 @@ html, body {
   padding-top: 7.5px;
   background-color: #fff;
   border-bottom: 1rpx solid rgb(230, 230, 230);
-  margin-left: 10%;
+  margin-left: 20%;
   margin-right: 30%;
 }
 
