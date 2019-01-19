@@ -1,6 +1,5 @@
 {
-  "pages":[
-    
+  "pages": [
     "pages/start/start",
     "pages/index/index",
     "pages/post/post",
@@ -17,12 +16,15 @@
     "pages/my/mycollection/mycollection",
     "pages/my/issues/issues",
     "pages/my/more/more",
-    "pages/my/logs/logs"
+    "pages/my/logs/logs",
+    "pages/me/myinfo",
+    "pages/detail2",
+    "pages/auth",
+    "pages/updata_info"
   ],
-  "window":{
+  "window": {
     "navigationBarTextStyle": "white",
-    // 控制最上方的颜色
-    "navigationBarBackgroundColor": "#118000",
+    "navigationBarBackgroundColor": "#118fff",
     "navigationBarTitleText": "苑级活动",
     "backgroundColor": "#000ff"
   },
@@ -40,16 +42,17 @@
       },
       {
         "pagePath": "pages/post/post",
-        "text": "发起",
+        "text": "添加",
         "iconPath": "static/images/tar-about.png",
         "selectedIconPath": "static/images/tar-about-on.png"
       },
       {
-        "pagePath": "pages/message/message",
-        "text": "动态",
-        "iconPath": "static/images/tar-topic.png",
-        "selectedIconPath": "static/images/tar-topic-on.png"
-      }]
+        "pagePath": "pages/me/myinfo",
+        "text": "我的",
+        "iconPath": "static/images/me.png",
+        "selectedIconPath": "static/images/me-on.png"
+      }
+    ]
   },
   "networkTimeout": {
     "request": 10000,

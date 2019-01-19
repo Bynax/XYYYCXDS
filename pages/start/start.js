@@ -17,13 +17,13 @@ Page({
    
   },
   onShow:function(){
-    console.log('onLoad')
-    var that = this
-    app.getUserInfo(function (userInfo) {
-      that.setData({
-        userInfo: userInfo
-      })
-    })
+    // console.log('onLoad')
+    // var that = this
+    // app.getUserInfo(function (userInfo) {
+    //   that.setData({
+    //     userInfo: userInfo
+    //   })
+    // })
   },
   onReady: function(){
     var _this = this;

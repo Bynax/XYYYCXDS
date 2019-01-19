@@ -11,9 +11,10 @@
           搜索活动
         </view>
       </view>
-      <view bindtap='gotoMap' class="avatar_r">
+      <!--地图模式应该没必要打开-->
+      <!-- <view bindtap='gotoMap' class="avatar_r">
         <image src="/static/images/map7.png"></image>
-      </view>
+      </view> -->
     </view>
     <!-- 活动详情界面 -->
     <swiper duration="300" interval="5000" autoplay="{{autoplay}}" bindchange="onSwiperChange" current="{{ curIndex }}" style="overflow: visible;">

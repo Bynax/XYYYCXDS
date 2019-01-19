@@ -1,0 +1,73 @@
+<view class="all">
+  <view class="header">
+    <view class="title">{{detail_data.activityTitle}}
+      <view wx:if="{{detail_data.fire}}" class="fire iconfont icon-fire"></view>
+    </view>
+
+    <view class="online-date">发布于{{formate_online_date}}</view>
+  </view>
+
+  <view class="gap"></view>
+
+  <view class="tag-wrapper">
+    <view class="tag {{tag_select == 0 ? 'tag-selected':''}}" data-tag-index="0" catchtap="click_tag">
+      <view class="tag-text">活动内容</view>
+    </view>
+    <view class="tag {{tag_select == 1 ? 'tag-selected':''}}" data-tag-index="1" catchtap="click_tag">
+      <view class="tag-text">活动信息</view>
+    </view>
+
+  </view>
+  <!--活动信息页面-->
+  <view wx:if="{{tag_select == 1}}" class="act-info-wrapper">
+    <view class="tr tr-blue">
+      <view class="td1">截止时间</view>
+      <view class="td2">{{formate_act_date}}</view>
+    </view>
+    <view class="tr">
+      <view class="td1">活动地点</view>
+      <view class="td2">{{detail_data.activityLocation}}</view>
+    </view>
+    <view class="tr tr-blue">
+      <view class="td1">主办方</view>
+      <view class="td2">{{detail_data.activityHolder}}</view>
+    </view>
+    <view class="tr">
+      <view class="td1">活动时长</view>
+      <view class="td2">{{detail_data.duration}}分钟</view>
+    </view>
+    <view wx:if="detail_data.joinStu.length > 5" class="tr tr-blue">
+      <view class="td1">报名人数</view>
+      <view class="td2">{{detail_data.joinStu.length}}人</view>
+    </view>
+    <view wx:if="{{detail_data.remark}}" class="other-wrapper">
+      *备注: {{detail_data.remark}}
+    </view>
+  </view>
+  <!-- 活动内容界面  -->
+  <view wx:if="{{tag_select == 0}}" class="act-detail-wrapper">
+    <rich-text nodes="{{detail_data.content}}"></rich-text>
+  </view>
+  <view class="footer" wx:if="{{!expired&&enroll}}">
+    <view class=" button-common {{has_join == false?'un-has':'has'}}" bindtap="click_join">
+      <image class="button-icon" src="{{has_join == false?'/images/detail/join.svg':'/images/detail/has_join.svg'}}"></image>
+      <text class="button-text">{{has_join == false?'现在参加':'退出活动'}}</text>
+    </view>
+    <view class=" button-common {{has_fav == false?'un-has':'has'}}" bindtap="click_fav">
+      <image class="button-icon" src="{{has_fav == false?'/images/detail/fav.svg':'/images/detail/has_fav.svg'}}"></image>
+      <text class="button-text">{{has_fav == false?'收藏':'已收藏'}}</text>
+    </view>
+  </view>
+  <view class='footer' wx:if="{{expired}}">
+    <view class='activity-over'>
+      <image class="button-icon" src='/images/icon/cry.svg'></image>
+      <text>活动已结束</text>
+    </view>
+  </view>
+  <view class='footer' wx:elif="{{!enroll}}">
+    <view class="activity-enroll {{has_fav == false?'un-has':'has'}}" bindtap="click_fav">
+    <image class="button-icon" src="{{has_fav == false?'/images/detail/fav.svg':'/images/detail/has_fav.svg'}}"></image>
+      <text class="button-text">{{has_fav == false?'收藏':'已收藏'}}</text>
+    </view>
+  </view>
+</view>
