@@ -12,8 +12,6 @@
     "pages/my/myjoin/myjoin",
     "pages/my/mylaunch/mylaunch",
     "pages/my/mycollection/mycollection",
-    "pages/my/more/more",
-    "pages/my/logs/logs",
     "pages/myinfo/myinfo"
   ],
   "window": {

@@ -5,11 +5,11 @@
       <image src="/static/images/website-search.png" class="cover"></image>
     </view>
     <view class="topic-content-title">
-      <text>我的发起</text>
+      <text>我的活动</text>
     </view>
     <view class="topic-content-title-line"></view>
     <view class="topic-content-brief">
-      <text>共发布{{totalCount}}个发起</text>
+      <text>共发布{{totalCount}}个活动</text>
     </view>
   </view>
 </view>
@@ -20,7 +20,7 @@
       <image src="/static/images/norecord1.png" class="empty_img"></image>
     </view>
     <view class="txtitem">
-      <text class="t28rpx">暂无发起</text>
+      <text class="t28rpx">暂无发布活动</text>
     </view>
   </view>
   <view wx:if="{{postsList.length > 0}}">
@@ -30,7 +30,7 @@
         <view wx:if="{{!isEmpty}}">
           <button class="more-button" formType="submit" size="mini" bindtap="loadMore">加载更多...</button>
         </view>
-        <view class="no-more" wx:if="{{isEmpty}}">---无更多发起---</view>
+        <view class="no-more" wx:if="{{isEmpty}}">---无更多活动---</view>
       </view>
     </view>
   </view>

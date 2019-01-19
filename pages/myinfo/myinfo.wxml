@@ -27,7 +27,7 @@
     <view class="thirdblock" style='margin-top:80px;'>
       <view class="itemself" bindtap="click_myLaunch" data-index="1">
         <image src="/static/images/icon/times.png" class="itemself_ico"></image>
-        <span>我的发起</span>
+        <span>我的活动</span>
       </view>
       <view class="itemself" bindtap="click_myJoin" data-index="2">
         <image src="/static/images/icon/jssq.png" class="itemself_ico"></image>

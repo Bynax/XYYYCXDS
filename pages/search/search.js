@@ -217,17 +217,19 @@ Page({
   }
 })
 
+
 //根据活动类型获取活动类型名称
 function getTypeName(acttype) {
   var acttypeName = "";
-  if (acttype == 1) acttypeName = "运动";
-  else if (acttype == 2) acttypeName = "游戏";
-  else if (acttype == 3) acttypeName = "交友";
-  else if (acttype == 4) acttypeName = "旅行";
-  else if (acttype == 5) acttypeName = "读书";
-  else if (acttype == 6) acttypeName = "竞赛";
-  else if (acttype == 7) acttypeName = "电影";
-  else if (acttype == 8) acttypeName = "音乐";
-  else if (acttype == 9) acttypeName = "其他";
+  if (acttype == 1) acttypeName = "未名一";
+  else if (acttype == 2) acttypeName = "未名二";
+  else if (acttype == 3) acttypeName = "燕南一";
+  else if (acttype == 4) acttypeName = "燕南二";
+  else if (acttype == 5) acttypeName = "求知一";
+  else if (acttype == 6) acttypeName = "求知二";
+  else if (acttype == 7) acttypeName = "博雅一";
+  else if (acttype == 8) acttypeName = "博雅二";
+  else if (acttype == 9) acttypeName = "朗润一";
+  else if (acttype == 10) acttypeName = "朗润二";
   return acttypeName;
 }
