@@ -10,13 +10,10 @@ const FAST_SPEED_SECOND = 300;
 const FAST_SPEED_DISTANCE = 5;
 const FAST_SPEED_EFF_Y = 50;
 
-// var my_nick = wx.getStorageSync('my_nick')
-// var my_sex = wx.getStorageSync('my_sex')
-// var my_avatar = wx.getStorageSync('my_avatar')
+var my_nick = wx.getStorageSync('my_nick')
+var my_sex = wx.getStorageSync('my_sex')
+var my_avatar = wx.getStorageSync('my_avatar')
 
-// var my_nick = app.userInfo.
-// var my_sex = wx.getStorageSync('my_sex')
-// var my_avatar = wx.getStorageSync('my_avatar')
 Page({
   data: {
     my_nick: my_nick,

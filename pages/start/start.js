@@ -114,11 +114,28 @@ Page({
       wx.login({
         success: function (res) {
           if (res.code) {
-            app.globalData.userInfo = res.userInfo;
-            //console.log(app.globalData.userInfo.nickname)
-            wx.switchTab({
-              url: '/pages/index/index',
+            wx.getUserInfo({
+              success:function(result){
+                app.globalData.userInfo = result.userInfo;
+                //console.log(app.globalData.userInfo.nickname)
+                var userInfo = result.userInfo
+                var nickName = userInfo.nickName
+                var avatarUrl = userInfo.avatarUrl
+                var sex = userInfo.gender
+
+                //wx.setStorageSync('user_openid', user.get('userData').openid)
+                //wx.setStorageSync('user_id', user.id)
+                wx.setStorageSync('my_nick', nickName)
+                wx.setStorageSync('my_sex', sex)
+                wx.setStorageSync('my_avatar', avatarUrl)
+                console.log(nickName)
+                wx.switchTab({
+                  url: '/pages/index/index',
+                })
+
+              }
             })
+            
           } else {
             wx.showToast({
               title: '登录失败',

@@ -118,183 +118,190 @@ Page({
   },
 
   //获取总的活动数
+  // getAll: function () {
+  //   self = this;
+  //   var Diary = Bmob.Object.extend("Events");
+  //   var query = new Bmob.Query(Diary);
+  //   query.equalTo("isShow", 1); //只统计公开显示的活动
+  //   query.count({
+  //     success: function (count) {
+  //       var totalPage = 0;
+  //       var endPage = 0;
+  //       if (count % self.data.limitPage == 0) {//如果总数的为偶数
+  //         totalPage = parseInt(count / self.data.limitPage);
+  //       } else {
+  //         var lowPage = parseInt(count / self.data.limitPage);
+  //         endPage = count - (lowPage * self.data.limitPage);
+  //         totalPage = lowPage + 1;
+  //       }
+  //       self.setData({
+  //         totalCount: count,
+  //         endPage: endPage,
+  //         totalPage: totalPage
+  //       })
+  //       console.log("共有" + count + " 条记录");
+  //       console.log("共有" + totalPage + "页");
+  //       console.log("最后一页加载" + endPage + "条");
+  //     },
+  //   });
+  // },
+
   getAll: function () {
-    self = this;
-    var Diary = Bmob.Object.extend("Events");
-    var query = new Bmob.Query(Diary);
-    query.equalTo("isShow", 1); //只统计公开显示的活动
-    query.count({
-      success: function (count) {
-        var totalPage = 0;
-        var endPage = 0;
-        if (count % self.data.limitPage == 0) {//如果总数的为偶数
-          totalPage = parseInt(count / self.data.limitPage);
-        } else {
-          var lowPage = parseInt(count / self.data.limitPage);
-          endPage = count - (lowPage * self.data.limitPage);
-          totalPage = lowPage + 1;
-        }
-        self.setData({
-          totalCount: count,
-          endPage: endPage,
-          totalPage: totalPage
-        })
-        console.log("共有" + count + " 条记录");
-        console.log("共有" + totalPage + "页");
-        console.log("最后一页加载" + endPage + "条");
-      },
-    });
+    
+  },
+
+  fetchTopThreePosts:function(){
+
   },
 
 
 
+  // //获取轮播图的文章,点赞数最多的前3个
+  // fetchTopThreePosts: function () {
+  //   var self = this;
+  //   var molist = new Array();
+  //   var Diary = Bmob.Object.extend("Events");
+  //   var query = new Bmob.Query(Diary);
+  //   query.equalTo("isShow", 1); //公开显示的
+  //   query.descending("likenum");
+  //   query.include("publisher");
+  //   query.limit(3);
+  //   query.find({
+  //     success: function (results) {
+  //       for (var i = 0; i < results.length; i++) {
+  //         var publisherId = results[i].get("publisher").objectId;
+  //         var title = results[i].get("title");
+  //         var content = results[i].get("content");
+  //         var acttype = results[i].get("acttype");
+  //         var isShow = results[i].get("isShow");
+  //         var endtime = results[i].get("endtime");
+  //         var address = results[i].get("address");
+  //         var addressdetail = results[i].get("addressdetail");
+  //         var peoplenum = results[i].get("peoplenum");
+  //         var likenum = results[i].get("likenum");
+  //         var liker = results[i].get("liker");
+  //         var isLike = 0;
+  //         var commentnum = results[i].get("commentnum");
 
-  //获取轮播图的文章,点赞数最多的前3个
-  fetchTopThreePosts: function () {
-    var self = this;
-    var molist = new Array();
-    var Diary = Bmob.Object.extend("Events");
-    var query = new Bmob.Query(Diary);
-    query.equalTo("isShow", 1); //公开显示的
-    query.descending("likenum");
-    query.include("publisher");
-    query.limit(3);
-    query.find({
-      success: function (results) {
-        for (var i = 0; i < results.length; i++) {
-          var publisherId = results[i].get("publisher").objectId;
-          var title = results[i].get("title");
-          var content = results[i].get("content");
-          var acttype = results[i].get("acttype");
-          var isShow = results[i].get("isShow");
-          var endtime = results[i].get("endtime");
-          var address = results[i].get("address");
-          var addressdetail = results[i].get("addressdetail");
-          var peoplenum = results[i].get("peoplenum");
-          var likenum = results[i].get("likenum");
-          var liker = results[i].get("liker");
-          var isLike = 0;
-          var commentnum = results[i].get("commentnum");
+  //         var id = results[i].id;
+  //         var createdAt = results[i].createdAt;
+  //         var pubtime = util.getDateDiff(createdAt);
+  //         var _url
+  //         var actpic = results[i].get("actpic");
+  //         if (actpic) {
+  //           _url = results[i].get("actpic")._url;
+  //         } else {
+  //           _url = "http://bmob-cdn-14867.b0.upaiyun.com/2017/12/01/89a6eba340008dce801381c4550787e4.png";
+  //         }
+  //         var publisherName = results[i].get("publisher").nickname;
+  //         var publisherPic = results[i].get("publisher").userPic;
+  //         var jsonA;
+  //         jsonA = {
+  //           "title": title || '',
+  //           "content": content || '',
+  //           "acttype": acttype || '',
+  //           "isShow": isShow,
+  //           "endtime": endtime || '',
+  //           "address": address || '',
+  //           "addressdetail": addressdetail || '',
+  //           "peoplenum": peoplenum || '',
+  //           "id": id || '',
+  //           "publisherPic": publisherPic || '',
+  //           "publisherName": publisherName || '',
+  //           "publisherId": publisherId || '',
+  //           "pubtime": pubtime || '',
+  //           "actPic": _url || '',
+  //           "likenum": likenum,
+  //           "commentnum": commentnum,
+  //           "is_liked": isLike || ''
+  //         }
+  //         molist.push(jsonA);
+  //       }
+  //       self.setData({
+  //         postsShowSwiperList: molist
+  //       })
+  //       self.fetchPostsData(self.data); //加载首页信息
+  //     },
+  //     error: function (error) {
+  //       console.log(error)
+  //     }
+  //   })
+  // },
 
-          var id = results[i].id;
-          var createdAt = results[i].createdAt;
-          var pubtime = util.getDateDiff(createdAt);
-          var _url
-          var actpic = results[i].get("actpic");
-          if (actpic) {
-            _url = results[i].get("actpic")._url;
-          } else {
-            _url = "http://bmob-cdn-14867.b0.upaiyun.com/2017/12/01/89a6eba340008dce801381c4550787e4.png";
-          }
-          var publisherName = results[i].get("publisher").nickname;
-          var publisherPic = results[i].get("publisher").userPic;
-          var jsonA;
-          jsonA = {
-            "title": title || '',
-            "content": content || '',
-            "acttype": acttype || '',
-            "isShow": isShow,
-            "endtime": endtime || '',
-            "address": address || '',
-            "addressdetail": addressdetail || '',
-            "peoplenum": peoplenum || '',
-            "id": id || '',
-            "publisherPic": publisherPic || '',
-            "publisherName": publisherName || '',
-            "publisherId": publisherId || '',
-            "pubtime": pubtime || '',
-            "actPic": _url || '',
-            "likenum": likenum,
-            "commentnum": commentnum,
-            "is_liked": isLike || ''
-          }
-          molist.push(jsonA);
-        }
-        self.setData({
-          postsShowSwiperList: molist
-        })
-        self.fetchPostsData(self.data); //加载首页信息
-      },
-      error: function (error) {
-        console.log(error)
-      }
-    })
-  },
+  // //获取首页列表文章
+  // fetchPostsData: function (data) {
+  //   var self = this;
+  //   //获取详询活动信息
+  //   var molist = new Array();
+  //   var Diary = Bmob.Object.extend("Events");
+  //   var query = new Bmob.Query(Diary);
+  //   query.equalTo("isShow", 1); //公开显示的
+  //   query.limit(self.data.limitPage);
+  //   console.log(self.data.limitPage);
+  //   query.skip(3 * self.data.currentPage);
+  //   query.descending("createdAt"); //按照时间降序
+  //   query.include("publisher");
+  //   query.find({
+  //     success: function (results) {
+  //       for (var i = 0; i < results.length; i++) {
+  //         var publisherId = results[i].get("publisher").objectId;
+  //         var title = results[i].get("title");
+  //         var content = results[i].get("content");
+  //         var acttype = results[i].get("acttype");
+  //         var endtime = results[i].get("endtime");
+  //         var address = results[i].get("address");
+  //         var acttypename = getTypeName(acttype); //根据类型id获取类型名称
+  //         var isShow = results[i].get("isShow");
+  //         var peoplenum = results[i].get("peoplenum");
+  //         var likenum = results[i].get("likenum");
+  //         var liker = results[i].get("liker");
+  //         var isLike = 0;
+  //         var commentnum = results[i].get("commentnum");
+  //         var id = results[i].id;
+  //         var createdAt = results[i].createdAt;
+  //         var pubtime = util.getDateDiff(createdAt);
+  //         var _url
+  //         var actpic = results[i].get("actpic");
+  //         if (actpic) {
+  //           _url = results[i].get("actpic")._url;
+  //         } else {
+  //           _url = "http://bmob-cdn-14867.b0.upaiyun.com/2017/12/01/89a6eba340008dce801381c4550787e4.png";
+  //         }
+  //         var publisherName = results[i].get("publisher").nickname;
+  //         var publisherPic = results[i].get("publisher").userPic;
+  //         var jsonA;
+  //         jsonA = {
+  //           "title": title || '',
+  //           "content": content || '',
+  //           "acttype": acttype || '',
+  //           "acttypename": acttypename || '',
+  //           "isShow": isShow,
+  //           "endtime": endtime || '',
+  //           "address": address || '',
+  //           "peoplenum": peoplenum || '',
+  //           "id": id || '',
+  //           "publisherPic": publisherPic || '',
+  //           "publisherName": publisherName || '',
+  //           "publisherId": publisherId || '',
+  //           "pubtime": pubtime || '',
+  //           "actPic": _url || '',
+  //           "likenum": likenum,
+  //           "commentnum": commentnum,
+  //           "is_liked": isLike || ''
+  //         }
+  //         molist.push(jsonA);
+  //       }
+  //       self.onSetData(molist, self.data.currentPage);
 
-  //获取首页列表文章
-  fetchPostsData: function (data) {
-    var self = this;
-    //获取详询活动信息
-    var molist = new Array();
-    var Diary = Bmob.Object.extend("Events");
-    var query = new Bmob.Query(Diary);
-    query.equalTo("isShow", 1); //公开显示的
-    query.limit(self.data.limitPage);
-    console.log(self.data.limitPage);
-    query.skip(3 * self.data.currentPage);
-    query.descending("createdAt"); //按照时间降序
-    query.include("publisher");
-    query.find({
-      success: function (results) {
-        for (var i = 0; i < results.length; i++) {
-          var publisherId = results[i].get("publisher").objectId;
-          var title = results[i].get("title");
-          var content = results[i].get("content");
-          var acttype = results[i].get("acttype");
-          var endtime = results[i].get("endtime");
-          var address = results[i].get("address");
-          var acttypename = getTypeName(acttype); //根据类型id获取类型名称
-          var isShow = results[i].get("isShow");
-          var peoplenum = results[i].get("peoplenum");
-          var likenum = results[i].get("likenum");
-          var liker = results[i].get("liker");
-          var isLike = 0;
-          var commentnum = results[i].get("commentnum");
-          var id = results[i].id;
-          var createdAt = results[i].createdAt;
-          var pubtime = util.getDateDiff(createdAt);
-          var _url
-          var actpic = results[i].get("actpic");
-          if (actpic) {
-            _url = results[i].get("actpic")._url;
-          } else {
-            _url = "http://bmob-cdn-14867.b0.upaiyun.com/2017/12/01/89a6eba340008dce801381c4550787e4.png";
-          }
-          var publisherName = results[i].get("publisher").nickname;
-          var publisherPic = results[i].get("publisher").userPic;
-          var jsonA;
-          jsonA = {
-            "title": title || '',
-            "content": content || '',
-            "acttype": acttype || '',
-            "acttypename": acttypename || '',
-            "isShow": isShow,
-            "endtime": endtime || '',
-            "address": address || '',
-            "peoplenum": peoplenum || '',
-            "id": id || '',
-            "publisherPic": publisherPic || '',
-            "publisherName": publisherName || '',
-            "publisherId": publisherId || '',
-            "pubtime": pubtime || '',
-            "actPic": _url || '',
-            "likenum": likenum,
-            "commentnum": commentnum,
-            "is_liked": isLike || ''
-          }
-          molist.push(jsonA);
-        }
-        self.onSetData(molist, self.data.currentPage);
-
-        setTimeout(function () {
-          wx.hideLoading();
-        }, 900);
-      },
-      error: function (error) {
-        console.log(error)
-      }
-    })
-  },
+  //       setTimeout(function () {
+  //         wx.hideLoading();
+  //       }, 900);
+  //     },
+  //     error: function (error) {
+  //       console.log(error)
+  //     }
+  //   })
+  // },
 
   //加载下一页
   loadMore: function () {
