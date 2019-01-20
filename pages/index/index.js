@@ -10,15 +10,15 @@ const FAST_SPEED_SECOND = 300;
 const FAST_SPEED_DISTANCE = 5;
 const FAST_SPEED_EFF_Y = 50;
 
-// var my_nick = wx.getStorageSync('my_nick')
-// var my_sex = wx.getStorageSync('my_sex')
-// var my_avatar = wx.getStorageSync('my_avatar')
+var my_nick = wx.getStorageSync('my_nick')
+var my_sex = wx.getStorageSync('my_sex')
+var my_avatar = wx.getStorageSync('my_avatar')
 Page({
   data: {
-    // my_nick: my_nick,
-    // my_sex: my_sex,
-    // my_avatar: my_avatar,
-    // userInfo: [],
+    my_nick: my_nick,
+    my_sex: my_sex,
+    my_avatar: my_avatar,
+    userInfo: [],
     dialog: false,
     autoplay: false,
     ui: {
@@ -73,8 +73,8 @@ Page({
 
   onLoad(t) {
     var self = this;
-    //this.getAll();
-    //this.fetchTopThreePosts(); //获取轮播图的3篇文章
+    this.getAll();
+    this.fetchTopThreePosts(); //获取轮播图的3篇文章
     try {
       let res = wx.getSystemInfoSync()
       this.windowWidth = res.windowWidth;
@@ -93,11 +93,7 @@ Page({
     console.log('加载头像')
     var that = this
 
-    // app.getUserInfo(function (userInfo) {
-    //   that.setData({
-    //     userInfo: userInfo
-    //   })
-    // })
+   that.data.userInfo = app.globalData.userInfo 
     wx.getSystemInfo({
       success: (res) => {
         this.setData({
@@ -399,50 +395,6 @@ Page({
       });
     }
   },
-  //进入项目简介
-  click_projectBrief: function () {
-    if (!this.buttonClicked) {
-      util.buttonClicked(this);
-      wx.navigateTo({
-        url: '/pages/my/projectbrief/projectbrief',
-      });
-    }
-  },
-
-  //进入反馈建议
-  click_Tick: function () {
-    if (!this.buttonClicked) {
-      util.buttonClicked(this);
-      wx.navigateTo({
-        url: '/pages/my/issues/issues',
-      });
-    }
-  },
-
-  //进入更多信息
-  click_more: function () {
-    if (!this.buttonClicked) {
-      util.buttonClicked(this);
-      wx.navigateTo({
-        url: '/pages/my/more/more',
-      });
-    }
-  },
-
-  //进入关于我们
-  click_aboutUs: function () {
-    if (!this.buttonClicked) {
-      util.buttonClicked(this);
-      wx.navigateTo({
-        url: '/pages/my/aboutus/aboutus',
-      });
-    }
-  },
-
-
-
-
-
   //--------------------------------------------------------------------------------------------------------
   handlerStart(e) {
     let { clientX, clientY } = e.touches[0];

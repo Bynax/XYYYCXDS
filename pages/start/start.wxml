@@ -12,12 +12,11 @@
         <image class="wave wave-bg" src="/static/images/more/wave.png" mode="aspectFill"></image>
       </view>
       <view class="bd">
-         <image class="smalltitle" src="/static/images/more/confirm-word1.png"></image>
-        <view class="confirm-btn" bindtap='goToIndex'>
-          <text >立即体验</text>
-        </view>
-        <text class="copyright">北京大学软件与微电子学院</text>
-      </view>
+        <image class="smalltitle" src="/static/images/more/confirm-word1.png"></image>
+        <!-- <view wx:if="{{canIUse}}" class="confirm-btn" bindtap='goToIndex'> -->
+        <button wx:if="{{canIUse}}" class='confirm-btn' open-type="getUserInfo" bindgetuserinfo='bindGetUserInfo'>授权登陆</button>
+      <!-- <text class="copyright">北京大学软件与微电子学院</text> -->
     </view>
-  </block>
+</view>
+</block>
 </view>
