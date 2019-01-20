@@ -56,10 +56,34 @@ Page({
       }
     })
   },
-
-  
-
-  //--------------------------------------------------------------------------------------------------------
+  //进入我的发起
+  click_myLaunch: function () {
+    if (!this.buttonClicked) {
+      util.buttonClicked(this);
+      wx.navigateTo({
+        url: '/pages/my/mylaunch/mylaunch',
+      });
+    }
+  },
+  //进入我的加入
+  click_myJoin: function () {
+    if (!this.buttonClicked) {
+      util.buttonClicked(this);
+      wx.navigateTo({
+        url: '/pages/my/myjoin/myjoin',
+      });
+    }
+  },
+  //进入我的收藏
+  click_myCollection: function () {
+    if (!this.buttonClicked) {
+      util.buttonClicked(this);
+      wx.navigateTo({
+        url: '/pages/my/mycollection/mycollection',
+      });
+    }
+  },
+//--------------------------------------------------------------------------------------------------------
   handlerStart(e) {
     let { clientX, clientY } = e.touches[0];
     this.tapStartX = clientX;

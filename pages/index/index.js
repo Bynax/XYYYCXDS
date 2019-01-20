@@ -93,7 +93,7 @@ Page({
     console.log('加载头像')
     var that = this
 
-   that.data.userInfo = app.globalData.userInfo 
+    that.data.userInfo = app.globalData.userInfo
     wx.getSystemInfo({
       success: (res) => {
         this.setData({
@@ -145,14 +145,59 @@ Page({
   //     },
   //   });
   // },
+  generate_data: function () {
+    var jsonA;
+    var pic_url = "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIe1t2ibLpB2gLfdpkhN0M5z87n2H7SFzjGE0BZCibtwCxJxiaicbtOEnYQTlHM0RQf8f0V5QmjGibF1Ag/132";
+    jsonA = {
+      "title": "参加国家博物馆" || '',
+      "content": "参加国家博物馆" || '',
+      "acttype": "2" || '',
+      "isShow": "1",
+      "endtime": '20190110' || '',
+      "address": "中国国家博物馆" || '',
+      "addressdetail": "中国国家博物馆" || '',
+      "peoplenum": '6' || '',
+      "id": '2' || '',
+      "publisherPic": pic_url || '',
+      "publisherName": "薄焕仕hn" || '',
+      "publisherId": "729712508" || '',
+      "pubtime": "20190118" || '',
+      "actPic": pic_url || '',
+      "likenum": "2",
+      "commentnum": "2",
+      "is_liked": "1" || ''
+    }
+    return jsonA
+
+  },
 
   getAll: function () {
+
+  },
+
+  fetchTopThreePosts: function () {
+    var molist = new Array();
+    for (var i = 0; i < 3; i++) {
+      molist.push(this.generate_data())
+    }
+    this.setData({
+      postsShowSwiperList: molist
+    })
+    this.fetchPostsData(this.data); //加载首页信息
+  },
+
+  //获取首页列表文章
+  fetchPostsData: function (data) {
+    var self = this;
+    //获取详询活动信息
+    var molist = new Array();
+    for(var i = 0;i<10;i++){
     
+          molist.push(self.generate_data());
+        }
+        self.onSetData(molist, 1);
   },
 
-  fetchTopThreePosts:function(){
-
-  },
 
 
 
@@ -372,33 +417,6 @@ Page({
       console.log(getCurrentPages())
       wx.navigateTo({
         url: '/pages/search/search',
-      });
-    }
-  },
-  //进入我的发起
-  click_myLaunch: function () {
-    if (!this.buttonClicked) {
-      util.buttonClicked(this);
-      wx.navigateTo({
-        url: '/pages/my/mylaunch/mylaunch',
-      });
-    }
-  },
-  //进入我的加入
-  click_myJoin: function () {
-    if (!this.buttonClicked) {
-      util.buttonClicked(this);
-      wx.navigateTo({
-        url: '/pages/my/myjoin/myjoin',
-      });
-    }
-  },
-  //进入我的收藏
-  click_myCollection: function () {
-    if (!this.buttonClicked) {
-      util.buttonClicked(this);
-      wx.navigateTo({
-        url: '/pages/my/mycollection/mycollection',
       });
     }
   },

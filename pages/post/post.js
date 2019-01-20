@@ -330,85 +330,130 @@ Page({
         isdisabled: true
       })
       //向 Events 表中新增一条数据
-      wx.getStorage({
-        key: 'user_id',
-        success: function (ress) {
-          var Diary = Bmob.Object.extend("Events");
-          var diary = new Diary();
-          var me = new Bmob.User();
-          me.id = ress.data;
-          diary.set("title", title);
-          diary.set("endtime", endtime);
-          diary.set("acttype", acttype + "");
-          diary.set("isShow",1);
-          diary.set("address", address);
-          diary.set("longitude", longitude);//经度
-          diary.set("latitude", latitude);//纬度\
-          if (that.data.peopleHide) { //如果设置了人数
-            diary.set("peoplenum", peoplenum);
-          } else if (!that.data.peopleHide) {
-            diary.set("peoplenum", "-1");
-          }
-          diary.set("content", content);
-          diary.set("publisher", me);
-          diary.set("likenum", 0);
-          diary.set("commentnum", 0);
-          diary.set("liker", []);
-          diary.set("joinnumber", 0); //发布后初始加入人数为0
-          diary.set("joinArray", []);
-          if (that.data.isSrc == true) {
-            var name = that.data.src; //上传图片的别名
-            var file = new Bmob.File(name, that.data.src);
-            file.save();
-            diary.set("actpic", file);
-          }
-          //新增操作
-          diary.save(null, {
-            success: function (result) {
-              //活动扩展表中添加一条记录
-              var Diary = Bmob.Object.extend("EventMore");
-              var query = new Diary();
-              var Events = Bmob.Object.extend("Events");
-              var event = new Events();
-              event.id = result.id;
-              query.set("Status", 0);
-              query.set("Statusname", "准备中");
-              query.set("event", event);
-              //如果上传了群二维码
-              if (that.data.isCodeSrc == true) {
-                var name = that.data.codeSrc; //上传图片的别名
-                var file = new Bmob.File(name, that.data.codeSrc);
-                file.save();
-                query.set("qrcode", file);
-              }
-              query.save();
+      // wx.getStorage({
+      //   key: 'user_id',
+      //   success: function (ress) {
+      //     var Diary = Bmob.Object.extend("Events");
+      //     var diary = new Diary();
+      //     var me = new Bmob.User();
+      //     me.id = ress.data;
+      //     diary.set("title", title);
+      //     diary.set("endtime", endtime);
+      //     diary.set("acttype", acttype + "");
+      //     diary.set("isShow",1);
+      //     diary.set("address", address);
+      //     diary.set("longitude", longitude);//经度
+      //     diary.set("latitude", latitude);//纬度\
+      //     if (that.data.peopleHide) { //如果设置了人数
+      //       diary.set("peoplenum", peoplenum);
+      //     } else if (!that.data.peopleHide) {
+      //       diary.set("peoplenum", "-1");
+      //     }
+      //     diary.set("content", content);
+      //     diary.set("publisher", me);
+      //     diary.set("likenum", 0);
+      //     diary.set("commentnum", 0);
+      //     diary.set("liker", []);
+      //     diary.set("joinnumber", 0); //发布后初始加入人数为0
+      //     diary.set("joinArray", []);
+      //     if (that.data.isSrc == true) {
+      //       var name = that.data.src; //上传图片的别名
+      //       var file = new Bmob.File(name, that.data.src);
+      //       file.save();
+      //       diary.set("actpic", file);
+      //     }
+      //     //新增操作
+      //     diary.save(null, {
+      //       success: function (result) {
+      //         //活动扩展表中添加一条记录
+      //         var Diary = Bmob.Object.extend("EventMore");
+      //         var query = new Diary();
+      //         var Events = Bmob.Object.extend("Events");
+      //         var event = new Events();
+      //         event.id = result.id;
+      //         query.set("Status", 0);
+      //         query.set("Statusname", "准备中");
+      //         query.set("event", event);
+      //         //如果上传了群二维码
+      //         if (that.data.isCodeSrc == true) {
+      //           var name = that.data.codeSrc; //上传图片的别名
+      //           var file = new Bmob.File(name, that.data.codeSrc);
+      //           file.save();
+      //           query.set("qrcode", file);
+      //         }
+      //         query.save();
 
-              //再将发布者的信息添加到联系表中
-              wx.getStorage({
-                key: 'user_id',
-                success: function (ress) {
-                  var Contacts = Bmob.Object.extend("Contacts");
-                  var contact = new Contacts();
-                  var Events = Bmob.Object.extend("Events");
-                  var event = new Events();
-                  event.id = result.id;
-                  var me = new Bmob.User();
-                  me.id = ress.data;
-                  contact.set("publisher", me); //发布人是自己
-                  contact.set("currentUser", me); //参加的人也是自己
-                  contact.set("event", event);
-                  contact.set("realname", realname);
-                  contact.set("contactWay", contactWay);
-                  contact.set("contactValue", contactValue);
-                  contact.save();
-                },
-              })
+      //         //再将发布者的信息添加到联系表中
+      //         wx.getStorage({
+      //           key: 'user_id',
+      //           success: function (ress) {
+      //             var Contacts = Bmob.Object.extend("Contacts");
+      //             var contact = new Contacts();
+      //             var Events = Bmob.Object.extend("Events");
+      //             var event = new Events();
+      //             event.id = result.id;
+      //             var me = new Bmob.User();
+      //             me.id = ress.data;
+      //             contact.set("publisher", me); //发布人是自己
+      //             contact.set("currentUser", me); //参加的人也是自己
+      //             contact.set("event", event);
+      //             contact.set("realname", realname);
+      //             contact.set("contactWay", contactWay);
+      //             contact.set("contactValue", contactValue);
+      //             contact.save();
+      //           },
+      //         })
 
-              console.log("发布成功,objectId:" + result.id);
+      //         console.log("发布成功,objectId:" + result.id);
+      //         that.setData({
+      //           isLoading: false,
+      //           isdisabled: false,
+      //           eventId: result.id,
+      //         })
+      //         //添加成功，返回成功之后的objectId(注意，返回的属性名字是id,而不是objectId)
+      //         common.dataLoading("发起成功", "success", function () {
+      //           //重置表单
+      //           that.setData({
+      //             title: '',
+      //             typeIndex: 0,
+      //             address: '点击选择位置',
+      //             longitude: 0, //经度
+      //             latitude: 0,//纬度
+      //             data: formate_data(myDate),
+      //             isHide: true,
+      //             peoplenum: 0,
+      //             peopleHide: false,
+      //             isAgree: false,
+      //             accountIndex: 0,
+      //             realname: "",
+      //             content: "",
+      //             contactValue: '',
+      //             noteNowLen: 0,
+      //             showInput: false,
+      //             src: "",
+      //             isSrc: false,
+      //             codeSrc: "",
+      //             isCodeSrc: false
+
+      //           })
+      //         });
+      //       },
+      //       error: function (result, error) {
+      //         //添加失败
+      //         console.log("发布失败=" + error);
+      //         common.dataLoading("发起失败", "loading");
+      //         that.setData({
+      //           isLoading: false,
+      //           isdisabled: false
+      //         })
+      //       }
+      //     })
+      //   },
+      // })
+      console.log("发布成功" );
               that.setData({
                 isLoading: false,
                 isdisabled: false,
-                eventId: result.id,
               })
               //添加成功，返回成功之后的objectId(注意，返回的属性名字是id,而不是objectId)
               common.dataLoading("发起成功", "success", function () {
@@ -437,19 +482,6 @@ Page({
 
                 })
               });
-            },
-            error: function (result, error) {
-              //添加失败
-              console.log("发布失败=" + error);
-              common.dataLoading("发起失败", "loading");
-              that.setData({
-                isLoading: false,
-                isdisabled: false
-              })
-            }
-          })
-        },
-      })
     }
     setTimeout(function () {
       that.setData({
