@@ -270,7 +270,7 @@ Page({
     var contactValue = e.detail.value.contactValue;
     var wxReg = new RegExp("^[a-zA-Z]([-_a-zA-Z0-9]{5,19})+$");
     var qqReg = new RegExp("[1-9][0-9]{4,}");
-    var phReg = /^1[34578]\d{9}$/;
+    var phReg = /^1[345789]\d{9}$/;
     var nameReg = new RegExp("^[\u4e00-\u9fa5]{2,4}$");
     //先进行表单非空验证
     if (title == "") {

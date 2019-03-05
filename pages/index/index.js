@@ -421,16 +421,16 @@ Page({
     }
   },
   //--------------------------------------------------------------------------------------------------------
-  handlerStart(e) {
-    let { clientX, clientY } = e.touches[0];
-    this.tapStartX = clientX;
-    this.tapStartY = clientY;
-    this.tapStartTime = e.timeStamp;
-    this.startX = clientX;
-    this.data.ui.tStart = true;
-    this.setData({ ui: this.data.ui })
+  // handlerStart(e) {
+  //   let { clientX, clientY } = e.touches[0];
+  //   this.tapStartX = clientX;
+  //   this.tapStartY = clientY;
+  //   this.tapStartTime = e.timeStamp;
+  //   this.startX = clientX;
+  //   this.data.ui.tStart = true;
+  //   this.setData({ ui: this.data.ui })
 
-  },
+  // },
   handlerMove(e) {
     let { clientX } = e.touches[0];
     let { ui } = this.data;
@@ -485,15 +485,15 @@ Page({
       this.setData({ ui: ui })
 
     }
-  },
-  handlerAvatarTap(e) {
-    let { ui } = this.data;
-    if (ui.offsetLeft == 0) {
-      ui.offsetLeft = ui.menuWidth;
-      this.setData({ ui: ui })
-    }
-  },
-})
+  },})
+//   handlerAvatarTap(e) {
+//     let { ui } = this.data;
+//     if (ui.offsetLeft == 0) {
+//       ui.offsetLeft = ui.menuWidth;
+//       this.setData({ ui: ui })
+//     }
+//   },
+// })
 
 //根据活动类型获取活动类型名称
 function getTypeName(acttype) {

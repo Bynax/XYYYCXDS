@@ -12,7 +12,7 @@ var commentlist;
 var joinlist;
 var likerlist;
 let commentText; //评论输入框内容
-Page({
+Page({ 
   data: {
     accounts: ["微信号", "QQ号", "手机号"],
     accountIndex: 0,

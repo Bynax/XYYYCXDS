@@ -36,8 +36,8 @@ Page({
   onLoad: function () {
     that = this;
     //初始化的时候渲染wxSearchdata
-    WxSearch.init(that, 43, ['一起', '上自习', '开黑组队', '找驴友', '晚上去嗨', '约步走起']);
-    WxSearch.initMindKeys(['一起', '上自习', '开黑组队', '找驴友', '晚上去嗨','约步走起']);
+    WxSearch.init(that, 43, ['读书会', '党建', '团建','讲座','宣讲','班会']);
+    WxSearch.initMindKeys(['读书会', '党建', '团建', '讲座', '宣讲', '班会']);
   },
 
   onShow: function () {
