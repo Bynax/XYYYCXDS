@@ -313,7 +313,7 @@ overflow:hidden;
   padding: 15rpx 40rpx 30rpx;
 }
 .notice-q {
-  color: #999;
+  color: #000;
   font-size: 11pt;
   line-height: 200%;
   margin-top: 5rpx;
