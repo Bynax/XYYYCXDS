@@ -1,5 +1,5 @@
 <template name="tempCommonList">
-  <view class="common-list">
+  <!-- <view class="common-list">
     <block wx:key="id" wx:for="{{postsList}}">
       <view class="list-item has-img" index="{{index}}" id="{{item.id}}" data-actid="{{item.id}}" data-pubid='{{item.publisherId}}' bindtap="click_activity">
         <view class="content-title1">
@@ -16,5 +16,31 @@
         <image src="{{item.actPic}}" mode="aspectFill" class="cover"></image>
       </view>
     </block>
-  </view>  
+  </view>   -->
+  <view class="activity" wx:for="{{postsList}}" wx:key="id">
+        <view class="list_header">
+          <view class="list_header_left">
+            <image mode="aspectFill" src="{{item.publisherPic}}" wx:if="publisherPic"></image>
+            <view>{{item.publisherName}}</view>
+          </view>
+          <view class="content-date list_header_right">
+            <image src="/static/images/calendar.png"></image>
+            <text>{{item.pubtime}}</text>
+
+          </view>
+        </view>
+        <view class="horizontal">
+          <!-- <view class="tag tag_{{item.acttype}}">{{item.acttypename}}</view> -->
+          <text class="title">{{ item.title }}</text>
+          <view class="list_title_right">
+            <!-- 此处设置活动进行状态 -->
+            <text class="border">{{item.status}}</text>
+
+          </view>
+        </view>
+
+        <text class="time">有效时间：{{ item.endtime }}</text>
+        <text class="location">活动地点：{{ item.address }}</text>
+
+      </view>
 </template>

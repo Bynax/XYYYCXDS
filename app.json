@@ -9,7 +9,6 @@
     "pages/message/message",
     "pages/logs/logs",
     "pages/updAct/updAct",
-    "pages/my/myjoin/myjoin",
     "pages/my/mylaunch/mylaunch",
     "pages/my/mycollection/mycollection",
     "pages/myinfo/myinfo"

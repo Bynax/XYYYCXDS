@@ -65,15 +65,7 @@ Page({
       });
     }
   },
-  //进入我的加入
-  click_myJoin: function () {
-    if (!this.buttonClicked) {
-      util.buttonClicked(this);
-      wx.navigateTo({
-        url: '/pages/my/myjoin/myjoin',
-      });
-    }
-  },
+  
   //进入我的收藏
   click_myCollection: function () {
     if (!this.buttonClicked) {

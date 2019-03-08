@@ -296,10 +296,9 @@ Page({
           diary.set("title", title);
           diary.set("endtime", endtime);
           diary.set("acttype", acttype);
-          //diary.set("isShow",1);
           diary.set("address", address);
           diary.set("longitude", longitude); //经度
-          diary.set("latitude", latitude); //纬度\
+          diary.set("latitude", latitude); //纬度
           if (that.data.peopleHide) { //如果设置了人数
             diary.set("num_limit", num_limit);
           } else if (!that.data.peopleHide) {

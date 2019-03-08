@@ -47,7 +47,6 @@ Page({
 
   onLoad(t) {
     var self = this;
-    this.getAll();
     this.fetchPostsData()
     try {
       let res = wx.getSystemInfoSync()
@@ -61,8 +60,8 @@ Page({
   },
 
   onShow: function (e) {
-    console.log('加载头像')
     this.data.userInfo = app.globalData.userInfo
+    this.onLoad()
     wx.getSystemInfo({
       success: (res) => {
         this.setData({
@@ -86,38 +85,6 @@ Page({
     console.log(this.data.postsList, page);
   },
 
-  //获取总的活动数
-  getAll: function () {
-    self = this;
-    var Diary = Bmob.Object.extend("Events");
-    var query = new Bmob.Query(Diary);
-    query.find({
-      success:function(results){
-        var count = results.length;
-        var totalPage = 0;
-        var endPage = 0;
-        if (count % self.data.limitPage == 0) {//如果总数的为偶数
-          totalPage = parseInt(count / self.data.limitPage);
-        } else {
-          var lowPage = parseInt(count / self.data.limitPage);
-          endPage = count - (lowPage * self.data.limitPage);
-          totalPage = lowPage + 1;
-        }
-        self.setData({
-          totalCount: count,
-          endPage: endPage,
-          totalPage: totalPage
-        })
-        console.log("共有" + count + " 条记录");
-        console.log("共有" + totalPage + "页");
-        console.log("最后一页加载" + endPage + "条");
-      },
-      error:function(){
-        console.log("查询失败: " + error.code + " " + error.message);
-      }
-    })
-  },
- 
   //数据存储
   onSetData: function (data) {
     console.log(data.length);
@@ -253,7 +220,7 @@ Page({
       windowHeight1: 0,
       windowWidth1: 0,
     })
-    this.onShow();
+    this.onLoad();
   },
 
   // 点击活动进入活动详情页面

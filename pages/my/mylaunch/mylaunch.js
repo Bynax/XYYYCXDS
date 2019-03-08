@@ -104,6 +104,7 @@ Page({
           } else {
             _url = "http://bmob-cdn-14867.b0.upaiyun.com/2017/12/01/89a6eba340008dce801381c4550787e4.png";
           }
+          var status = app.globalData.statusL[results[i].get('status')]
           var jsonA;
           jsonA = {
             "title": title || '',
@@ -121,7 +122,8 @@ Page({
             "actPic": _url || '',
             "likenum": likenum,
             "commentnum": commentnum,
-            "is_liked": isLike || ''
+            "is_liked": isLike || '',
+            "status": status || '',
           }
           molist.push(jsonA);
         }
