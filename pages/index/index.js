@@ -19,8 +19,8 @@ Page({
     my_sex: my_sex,
     my_avatar: my_avatar,
     userInfo: [],
-    dialog: false,
-    autoplay: false,
+    //dialog: false,
+    //autoplay: false,
     ui: {
       windowWidth: 0,
       menuWidth: 0,
@@ -31,9 +31,9 @@ Page({
     buttonClicked: false, //是否点击跳转
     //--------首页显示内容---------
     postsList: [], //总的活动
-    postsShowSwiperList: [], //轮播图显示的活动
+    //postsShowSwiperList: [], //轮播图显示的活动
     currentPage: 0, //要跳过查询的页数
-    limitPage: 3,//首先显示3条数据（之后加载时都增加3条数据，直到再次加载不够3条）
+    limitPage: 6,//首先显示6条数据（之后加载时都增加3条数据，直到再次加载不够6条）
     isEmpty: false, //当前查询出来的数据是否为空
     totalCount: 0, //总活动数量
     endPage: 0, //最后一页加载多少条
@@ -44,37 +44,11 @@ Page({
 
   },
 
-  //首页切换图片
-  onSwiperChange: function (event) {
-    curIndex = event.detail.current
-    this.changeCurIndex()
-  },
-  changeCurIndex: function () {
-    this.setData({
-      curIndex: curIndex
-    })
-  },
-  onHide: function () {
-    this.setData({
-      autoplay: false
-    })
-  },
-
-  //到地图模式
-  gotoMap: function () {
-    if (!this.buttonClicked) {
-      util.buttonClicked(this);
-      wx.navigateTo({
-        url: '/pages/showinmap/showinmap',
-      });
-    }
-  },
-
 
   onLoad(t) {
     var self = this;
     this.getAll();
-    this.fetchTopThreePosts(); //获取轮播图的3篇文章
+    this.fetchPostsData()
     try {
       let res = wx.getSystemInfoSync()
       this.windowWidth = res.windowWidth;
@@ -87,13 +61,8 @@ Page({
   },
 
   onShow: function (e) {
-    this.getAll();
-    this.fetchTopThreePosts(); //获取轮播图的3篇文章
-    //this.onLoad();
     console.log('加载头像')
-    var that = this
-
-    that.data.userInfo = app.globalData.userInfo
+    this.data.userInfo = app.globalData.userInfo
     wx.getSystemInfo({
       success: (res) => {
         this.setData({
@@ -118,72 +87,47 @@ Page({
   },
 
   //获取总的活动数
-  // getAll: function () {
-  //   self = this;
-  //   var Diary = Bmob.Object.extend("Events");
-  //   var query = new Bmob.Query(Diary);
-  //   query.equalTo("isShow", 1); //只统计公开显示的活动
-  //   query.count({
-  //     success: function (count) {
-  //       var totalPage = 0;
-  //       var endPage = 0;
-  //       if (count % self.data.limitPage == 0) {//如果总数的为偶数
-  //         totalPage = parseInt(count / self.data.limitPage);
-  //       } else {
-  //         var lowPage = parseInt(count / self.data.limitPage);
-  //         endPage = count - (lowPage * self.data.limitPage);
-  //         totalPage = lowPage + 1;
-  //       }
-  //       self.setData({
-  //         totalCount: count,
-  //         endPage: endPage,
-  //         totalPage: totalPage
-  //       })
-  //       console.log("共有" + count + " 条记录");
-  //       console.log("共有" + totalPage + "页");
-  //       console.log("最后一页加载" + endPage + "条");
-  //     },
-  //   });
-  // },
-  generate_data: function () {
-    var jsonA;
-    var pic_url = "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIe1t2ibLpB2gLfdpkhN0M5z87n2H7SFzjGE0BZCibtwCxJxiaicbtOEnYQTlHM0RQf8f0V5QmjGibF1Ag/132";
-    jsonA = {
-      "title": "参加国家博物馆" || '',
-      "content": "参加国家博物馆" || '',
-      "acttype": "2" || '',
-      "isShow": "1",
-      "endtime": '20190110' || '',
-      "address": "中国国家博物馆" || '',
-      "addressdetail": "中国国家博物馆" || '',
-      "peoplenum": '6' || '',
-      "id": '2' || '',
-      "publisherPic": pic_url || '',
-      "publisherName": "薄焕仕hn" || '',
-      "publisherId": "729712508" || '',
-      "pubtime": "20190118" || '',
-      "actPic": pic_url || '',
-      "likenum": "2",
-      "commentnum": "2",
-      "is_liked": "1" || ''
-    }
-    return jsonA
-
-  },
-
   getAll: function () {
-
-  },
-
-  fetchTopThreePosts: function () {
-    var molist = new Array();
-    for (var i = 0; i < 3; i++) {
-      molist.push(this.generate_data())
-    }
-    this.setData({
-      postsShowSwiperList: molist
+    self = this;
+    var Diary = Bmob.Object.extend("Events");
+    var query = new Bmob.Query(Diary);
+    query.find({
+      success:function(results){
+        var count = results.length;
+        var totalPage = 0;
+        var endPage = 0;
+        if (count % self.data.limitPage == 0) {//如果总数的为偶数
+          totalPage = parseInt(count / self.data.limitPage);
+        } else {
+          var lowPage = parseInt(count / self.data.limitPage);
+          endPage = count - (lowPage * self.data.limitPage);
+          totalPage = lowPage + 1;
+        }
+        self.setData({
+          totalCount: count,
+          endPage: endPage,
+          totalPage: totalPage
+        })
+        console.log("共有" + count + " 条记录");
+        console.log("共有" + totalPage + "页");
+        console.log("最后一页加载" + endPage + "条");
+      },
+      error:function(){
+        console.log("查询失败: " + error.code + " " + error.message);
+      }
     })
-    this.fetchPostsData(this.data); //加载首页信息
+  },
+ 
+  //数据存储
+  onSetData: function (data) {
+    console.log(data.length);
+    let page = this.data.currentPage + 1;
+    //设置数据
+    data = data || [];
+    this.setData({
+      postsList: page === 1 || page === undefined ? data : this.data.postsList.concat(data),
+    });
+    console.log(this.data.postsList, page);
   },
 
   //获取首页列表文章
@@ -191,162 +135,77 @@ Page({
     var self = this;
     //获取详询活动信息
     var molist = new Array();
-    for(var i = 0;i<10;i++){
-    
-          molist.push(self.generate_data());
+    var Diary = Bmob.Object.extend("Events");
+    var query = new Bmob.Query(Diary);
+    query.limit(self.data.limitPage);
+    console.log(self.data.limitPage);
+    query.skip(3 * self.data.currentPage);
+    query.descending("createdAt"); //按照时间降序
+    query.include("publisher");
+    query.find({
+      success: function (results) {
+          var count = results.length;
+          var totalPage = 0;
+          var endPage = 0;
+          if (count % self.data.limitPage == 0) {//如果总数的为偶数
+            totalPage = parseInt(count / self.data.limitPage);
+          } else {
+            var lowPage = parseInt(count / self.data.limitPage);
+            endPage = count - (lowPage * self.data.limitPage);
+            totalPage = lowPage + 1;
+          }
+          self.setData({
+            totalCount: count,
+            endPage: endPage,
+            totalPage: totalPage
+          })
+          console.log("共有" + count + " 条记录");
+          console.log("共有" + totalPage + "页");
+          console.log("最后一页加载" + endPage + "条");
+      
+        for (var i = 0; i < results.length; i++) {
+          var publisherId = results[i].get("publisher").objectId;
+          var title = results[i].get("title");
+          var discription = results[i].get("discription");
+          var acttype = results[i].get("acttype");
+          var endtime = results[i].get("endtime");
+          var address = results[i].get("address");
+          var acttypename = getTypeName(acttype); //根据类型id获取类型名称
+          var num_limit = results[i].get("num_limit");
+          var id = results[i].id;
+          var createdAt = results[i].createdAt;
+          var pubtime = util.getDateDiff(createdAt);
+          var publisherName = results[i].get("publisher").nickname;
+          var publisherPic = results[i].get("publisher").userPic;
+          var status = app.globalData.statusL[results[i].get('status')]
+          var jsonA;
+          jsonA = {
+            "title": title || '',
+            "discription": discription || '',
+            "acttype": acttype || '',
+            "acttypename": acttypename || '',
+            "endtime": endtime || '',
+            "address": address || '',
+            "num_limit": num_limit || '',
+            "id": id || '',
+            "publisherPic": publisherPic || '',
+            "publisherName": publisherName || '',
+            "publisherId": publisherId || '',
+            "pubtime": pubtime || '',
+            "status":status || '',
+          }
+          molist.push(jsonA);
         }
-        self.onSetData(molist, 1);
+        self.onSetData(molist, self.data.currentPage);
+        setTimeout(function () {
+          wx.hideLoading();
+        }, 900);
+      },
+      error: function (error) {
+        console.log(error)
+      }
+    })
   },
-
-
-
-
-  // //获取轮播图的文章,点赞数最多的前3个
-  // fetchTopThreePosts: function () {
-  //   var self = this;
-  //   var molist = new Array();
-  //   var Diary = Bmob.Object.extend("Events");
-  //   var query = new Bmob.Query(Diary);
-  //   query.equalTo("isShow", 1); //公开显示的
-  //   query.descending("likenum");
-  //   query.include("publisher");
-  //   query.limit(3);
-  //   query.find({
-  //     success: function (results) {
-  //       for (var i = 0; i < results.length; i++) {
-  //         var publisherId = results[i].get("publisher").objectId;
-  //         var title = results[i].get("title");
-  //         var content = results[i].get("content");
-  //         var acttype = results[i].get("acttype");
-  //         var isShow = results[i].get("isShow");
-  //         var endtime = results[i].get("endtime");
-  //         var address = results[i].get("address");
-  //         var addressdetail = results[i].get("addressdetail");
-  //         var peoplenum = results[i].get("peoplenum");
-  //         var likenum = results[i].get("likenum");
-  //         var liker = results[i].get("liker");
-  //         var isLike = 0;
-  //         var commentnum = results[i].get("commentnum");
-
-  //         var id = results[i].id;
-  //         var createdAt = results[i].createdAt;
-  //         var pubtime = util.getDateDiff(createdAt);
-  //         var _url
-  //         var actpic = results[i].get("actpic");
-  //         if (actpic) {
-  //           _url = results[i].get("actpic")._url;
-  //         } else {
-  //           _url = "http://bmob-cdn-14867.b0.upaiyun.com/2017/12/01/89a6eba340008dce801381c4550787e4.png";
-  //         }
-  //         var publisherName = results[i].get("publisher").nickname;
-  //         var publisherPic = results[i].get("publisher").userPic;
-  //         var jsonA;
-  //         jsonA = {
-  //           "title": title || '',
-  //           "content": content || '',
-  //           "acttype": acttype || '',
-  //           "isShow": isShow,
-  //           "endtime": endtime || '',
-  //           "address": address || '',
-  //           "addressdetail": addressdetail || '',
-  //           "peoplenum": peoplenum || '',
-  //           "id": id || '',
-  //           "publisherPic": publisherPic || '',
-  //           "publisherName": publisherName || '',
-  //           "publisherId": publisherId || '',
-  //           "pubtime": pubtime || '',
-  //           "actPic": _url || '',
-  //           "likenum": likenum,
-  //           "commentnum": commentnum,
-  //           "is_liked": isLike || ''
-  //         }
-  //         molist.push(jsonA);
-  //       }
-  //       self.setData({
-  //         postsShowSwiperList: molist
-  //       })
-  //       self.fetchPostsData(self.data); //加载首页信息
-  //     },
-  //     error: function (error) {
-  //       console.log(error)
-  //     }
-  //   })
-  // },
-
-  // //获取首页列表文章
-  // fetchPostsData: function (data) {
-  //   var self = this;
-  //   //获取详询活动信息
-  //   var molist = new Array();
-  //   var Diary = Bmob.Object.extend("Events");
-  //   var query = new Bmob.Query(Diary);
-  //   query.equalTo("isShow", 1); //公开显示的
-  //   query.limit(self.data.limitPage);
-  //   console.log(self.data.limitPage);
-  //   query.skip(3 * self.data.currentPage);
-  //   query.descending("createdAt"); //按照时间降序
-  //   query.include("publisher");
-  //   query.find({
-  //     success: function (results) {
-  //       for (var i = 0; i < results.length; i++) {
-  //         var publisherId = results[i].get("publisher").objectId;
-  //         var title = results[i].get("title");
-  //         var content = results[i].get("content");
-  //         var acttype = results[i].get("acttype");
-  //         var endtime = results[i].get("endtime");
-  //         var address = results[i].get("address");
-  //         var acttypename = getTypeName(acttype); //根据类型id获取类型名称
-  //         var isShow = results[i].get("isShow");
-  //         var peoplenum = results[i].get("peoplenum");
-  //         var likenum = results[i].get("likenum");
-  //         var liker = results[i].get("liker");
-  //         var isLike = 0;
-  //         var commentnum = results[i].get("commentnum");
-  //         var id = results[i].id;
-  //         var createdAt = results[i].createdAt;
-  //         var pubtime = util.getDateDiff(createdAt);
-  //         var _url
-  //         var actpic = results[i].get("actpic");
-  //         if (actpic) {
-  //           _url = results[i].get("actpic")._url;
-  //         } else {
-  //           _url = "http://bmob-cdn-14867.b0.upaiyun.com/2017/12/01/89a6eba340008dce801381c4550787e4.png";
-  //         }
-  //         var publisherName = results[i].get("publisher").nickname;
-  //         var publisherPic = results[i].get("publisher").userPic;
-  //         var jsonA;
-  //         jsonA = {
-  //           "title": title || '',
-  //           "content": content || '',
-  //           "acttype": acttype || '',
-  //           "acttypename": acttypename || '',
-  //           "isShow": isShow,
-  //           "endtime": endtime || '',
-  //           "address": address || '',
-  //           "peoplenum": peoplenum || '',
-  //           "id": id || '',
-  //           "publisherPic": publisherPic || '',
-  //           "publisherName": publisherName || '',
-  //           "publisherId": publisherId || '',
-  //           "pubtime": pubtime || '',
-  //           "actPic": _url || '',
-  //           "likenum": likenum,
-  //           "commentnum": commentnum,
-  //           "is_liked": isLike || ''
-  //         }
-  //         molist.push(jsonA);
-  //       }
-  //       self.onSetData(molist, self.data.currentPage);
-
-  //       setTimeout(function () {
-  //         wx.hideLoading();
-  //       }, 900);
-  //     },
-  //     error: function (error) {
-  //       console.log(error)
-  //     }
-  //   })
-  // },
 
   //加载下一页
   loadMore: function () {
@@ -384,7 +243,6 @@ Page({
   refresh: function () {
     this.setData({
       postsList: [], //总的活动
-      postsShowSwiperList: [], //轮播图显示的活动
       currentPage: 0, //要跳过查询的页数
       limitPage: 3,//首先显示3条数据（之后加载时都增加3条数据，直到再次加载不够3条）
       isEmpty: false, //当前查询出来的数据是否为空
@@ -420,17 +278,7 @@ Page({
       });
     }
   },
-  //--------------------------------------------------------------------------------------------------------
-  // handlerStart(e) {
-  //   let { clientX, clientY } = e.touches[0];
-  //   this.tapStartX = clientX;
-  //   this.tapStartY = clientY;
-  //   this.tapStartTime = e.timeStamp;
-  //   this.startX = clientX;
-  //   this.data.ui.tStart = true;
-  //   this.setData({ ui: this.data.ui })
-
-  // },
+  
   handlerMove(e) {
     let { clientX } = e.touches[0];
     let { ui } = this.data;
@@ -486,14 +334,7 @@ Page({
 
     }
   },})
-//   handlerAvatarTap(e) {
-//     let { ui } = this.data;
-//     if (ui.offsetLeft == 0) {
-//       ui.offsetLeft = ui.menuWidth;
-//       this.setData({ ui: ui })
-//     }
-//   },
-// })
+
 
 //根据活动类型获取活动类型名称
 function getTypeName(acttype) {

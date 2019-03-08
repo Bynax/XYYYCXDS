@@ -1,9 +1,9 @@
 <!-- index.wxml -->
-<view class="mpage {{!ui.tStart? 'withAnimate': ''}}" style="left:{{ui.offsetLeft}}px;width: {{ui.windowWidth}}px;" bindtouchstart="handlerStart" catchtouchmove="handlerMove"  bindtouchcancel="handlerCancel" bindtouchend="handlerEnd" bindtap="handlerPageTap">
+<view class="mpage {{!ui.tStart? 'withAnimate': ''}}" style="left:{{ui.offsetLeft}}px;width: {{ui.windowWidth}}px;" bindtouchstart="handlerStart" catchtouchmove="handlerMove" bindtouchcancel="handlerCancel" bindtouchend="handlerEnd" bindtap="handlerPageTap">
   <scroll-view bindscroll="" scroll-y style="height: 100%;">
     <view class="search">
-      <view catchtap="handlerAvatarTap" class="avatar">
-        <image src="{{userInfo.avatarUrl}}"></image>
+      <view class="avatar">
+        <image src=""></image>
       </view>
       <view class="search-wrapper {{show_search_back?'search-wrapper-blue':''}}">
         <view class="search-button" bindtap="click_search">
@@ -11,27 +11,14 @@
           搜索活动
         </view>
       </view>
-      <!--地图模式应该没必要打开-->
-      <!-- <view bindtap='gotoMap' class="avatar_r">
-        <image src="/static/images/map7.png"></image>
-      </view> -->
+
     </view>
-    <!-- 活动详情界面 -->
-    <swiper duration="300" interval="5000" autoplay="{{autoplay}}" bindchange="onSwiperChange" current="{{ curIndex }}" style="overflow: visible;">
-      <swiper-item wx:for="{{ postsShowSwiperList }}" style="overflow: visible;" wx:key="actpic">
-        <image src="{{ item.actPic }}" style="width: 100%; height: 300rpx; background: #fff; box-shadow: 0 10rpx 15rpx rgba(0, 0, 0, .1); -webkit-transform: scale({{ curIndex == index ? 0.9 : 0.65 }}) translate({{ (curIndex == index - 1 || curIndex == index + 1) ? (curIndex - index) * 30 : 0 }}%, 0); -webkit-transition: .3s; position: relative;"
-          data-actid="{{item.id}}" data-pubid='{{item.publisherId}}' bindtap="click_activity" mode="aspectFill" />
-        <view class="horizontal">
-          <view class="tag recommend">最热活动</view>
-          <text class="title">{{item.title}}</text>
-        </view>
-      </swiper-item>
-    </swiper>
+
 
     <view class="activities">
       <view class="subtitle">
         <image src="/static/images/ic_activity.png" mode="aspectFit" />
-        <text>最新活动</text>
+        <text>活动列表</text>
         <space/>
         <button bindtap="refresh">点击刷新</button>
       </view>
@@ -45,18 +32,19 @@
           <view class="content-date list_header_right">
             <image src="/static/images/calendar.png"></image>
             <text>{{item.pubtime}}</text>
-            <image src="/static/images/comments.png"></image>
-            <text class="">{{item.commentnum}}</text>
-            <image src="/static/images/home-like.png"></image>
-            <text class="">{{item.likenum}}</text>
+
           </view>
         </view>
         <view class="horizontal">
-          <view class="tag tag_{{item.acttype}}">{{item.acttypename}}</view>
+          <!-- <view class="tag tag_{{item.acttype}}">{{item.acttypename}}</view> -->
           <text class="title">{{ item.title }}</text>
+          <view class="list_title_right">
+            <!-- 此处设置活动进行状态 -->
+            <text class="border">{{item.status}}</text>
+
+          </view>
         </view>
-        <image mode="aspectFill" class="photo" src="{{item.actPic}}" wx:if="{{item.actPic}}" data-actid="{{item.id}}" data-pubid='{{item.publisherId}}' bindtap="click_activity"></image>
-        <text class="intro">{{item.content}}</text>
+
         <text class="time">有效时间：{{ item.endtime }}</text>
         <text class="location">活动地点：{{ item.address }}</text>
 
@@ -69,6 +57,6 @@
       </view>
       <view class="no-more" wx:if="{{isEmpty}}">---无更多活动---</view>
     </view>
-    <tab-shadow/>
+    <!-- <tab-shadow/> -->
   </scroll-view>
 </view>

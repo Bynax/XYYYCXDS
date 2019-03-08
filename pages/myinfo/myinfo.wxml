@@ -11,33 +11,19 @@
         <image wx:if="{{my_sex == 0 || my_sex==''}}" src="/static/images/sex.png"></image>
       </view>
     </view>
-    <!-- <view style='background-color: #fff;' class='bottom-box'>
-      <view class="list-box">
-        <view class="icon-text">
-          <span>步数</span>
-        </view>
-        <text>2543</text>
-      </view>
-      <view class="list-box " bindtap=" ">
-        <view class="icon-text ">
-          <span>排名</span>
-        </view>
-        <text>21</text>
-      </view>
-    </view> -->
     <view class="thirdblock" style='margin-top:40px;'>
       <view class="itemself" bindtap="click_myLaunch" data-index="1">
         <image src="/static/images/icon/times.png" class="itemself_ico"></image>
         <span>我的活动</span>
       </view>
-      <view class="itemself" bindtap="click_myJoin" data-index="2">
+      <!-- <view class="itemself" bindtap="click_myJoin" data-index="2">
         <image src="/static/images/icon/jssq.png" class="itemself_ico"></image>
         <span>我的加入</span>
       </view>
       <view class="itemself" bindtap="click_myCollection" data-index="3">
         <image src="/static/images/icon/status.png" class="itemself_ico"></image>
         <span>我的收藏</span>
-      </view>
+      </view> -->
       <view class="itemself" bindtap="click_myCollection" data-index="3">
         <image src="/static/images/icon/status.png" class="itemself_ico"></image>
         <span>我的消息</span>

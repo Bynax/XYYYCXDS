@@ -54,7 +54,7 @@ page {
 
 .search .avatar image {
   width: 50rpx;
-  height: 50rpx;
+  height: 70rpx;
   border-radius: 50%;
   margin-right: 40rpx;
 }
@@ -272,11 +272,20 @@ swiper-item, swiper-item image {
 }
 
 .horizontal .title {
-  font-size: 30rpx;
+  font-size: 50rpx;
   color: #333;
   text-align: left;
 }
-
+.horizontal .list_title_right {
+  float: right;
+  padding: 0rpx 30rpx 0rpx 0;
+  
+}
+.horizontal .list_title_right .border{
+  border: 1px solid #fe0701;
+  border-radius: 8px;
+  padding: 0rpx 10rpx 0rpx 10rpx;
+}
 .activity .photo {
   width: 100%; /* 670rpx */
   height: 320rpx;
