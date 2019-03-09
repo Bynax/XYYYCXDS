@@ -1,5 +1,6 @@
 //login.js
 //获取应用实例
+wx.clearStorage();
 var Bmob = require("../../utils/bmob.js");
 Bmob.initialize("b50831e8a77f6b9a3b0cf69e4eb3806c", "10de7e320051c765fb8a341cc7cd720c");
 var app = getApp();
@@ -25,9 +26,6 @@ Page({
         app.userInfo = e.detail.userInfo;
         var value = wx.getStorageSync('user_openid')
         if (value) {
-          wx.switchTab({
-            url: '/pages/index/index',
-          });
         } else {
           wx.login({
             success: function(res) {
@@ -62,7 +60,7 @@ Page({
                               user.set("nickname", nickName);
                               user.set("userPic", avatarUrl);
                               user.set("userData", userData);
-                              user.set("auth1",2)
+                              user.set("auth1", user.get('auth1'))
                               // var role = Bmob.Object.createWithoutData("Role","hSdK555B");
                               // user.set("auth",role)
                               user.signUp(null, {
@@ -111,6 +109,10 @@ Page({
     }
   },
 
+onLoad:function(){
+  wx.clearStorage()
+
+},
   onReady: function() {
     var _this = this;
     setTimeout(function() {

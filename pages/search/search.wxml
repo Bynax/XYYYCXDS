@@ -13,16 +13,12 @@
   <view class="bg">
     <view class="choose_user" style="border-bottom:1rpx solid #e6e6e6;">
       <view class="choose_user_item" style="color:#{{tradeType==0?'fff':'118fff'}};background:#{{tradeType==0?'118fff':'fff'}};" bindtap="choseTradeType" id="0">全部</view>
-      <view class="choose_user_item" style="color:#{{tradeType==1?'fff':'118fff'}};background:#{{tradeType==1?'118fff':'fff'}};" bindtap="choseTradeType" id="1">未名一</view>
-      <view class="choose_user_item" style="color:#{{tradeType==2?'fff':'118fff'}};background:#{{tradeType==2?'118fff':'fff'}};" bindtap="choseTradeType" id="2">未名二</view>
-      <view class="choose_user_item" style="color:#{{tradeType==3?'fff':'118fff'}};background:#{{tradeType==3?'118fff':'fff'}};" bindtap="choseTradeType" id="3">燕南一</view>
-      <view class="choose_user_item" style="color:#{{tradeType==4?'fff':'118fff'}};background:#{{tradeType==4?'118fff':'fff'}};" bindtap="choseTradeType" id="4">燕南二</view>
-      <view class="choose_user_item" style="color:#{{tradeType==5?'fff':'118fff'}};background:#{{tradeType==5?'118fff':'fff'}};" bindtap="choseTradeType" id="5">求知一</view>
-      <view class="choose_user_item" style="color:#{{tradeType==6?'fff':'118fff'}};background:#{{tradeType==6?'118fff':'fff'}};" bindtap="choseTradeType" id="6">求知二</view>
-      <view class="choose_user_item" style="color:#{{tradeType==7?'fff':'118fff'}};background:#{{tradeType==7?'118fff':'fff'}};" bindtap="choseTradeType" id="7">博雅一</view>
-      <view class="choose_user_item" style="color:#{{tradeType==8?'fff':'118fff'}};background:#{{tradeType==8?'118fff':'fff'}};" bindtap="choseTradeType" id="8">博雅二</view>
-      <view class="choose_user_item" style="color:#{{tradeType==9?'fff':'118fff'}};background:#{{tradeType==9?'118fff':'fff'}};" bindtap="choseTradeType" id="9">朗润一</view>
-      <view class="choose_user_item" style="color:#{{tradeType==10?'fff':'118fff'}};background:#{{tradeType==9?'118fff':'fff'}};" bindtap="choseTradeType" id="9">朗润二</view>
+      <view class="choose_user_item" style="color:#{{tradeType==1?'fff':'118fff'}};background:#{{tradeType==1?'118fff':'fff'}};" bindtap="choseTradeType" id="1">读书会</view>
+      <view class="choose_user_item" style="color:#{{tradeType==2?'fff':'118fff'}};background:#{{tradeType==2?'118fff':'fff'}};" bindtap="choseTradeType" id="2">党建</view>
+      <view class="choose_user_item" style="color:#{{tradeType==3?'fff':'118fff'}};background:#{{tradeType==3?'118fff':'fff'}};" bindtap="choseTradeType" id="3">团建</view>
+      <view class="choose_user_item" style="color:#{{tradeType==4?'fff':'118fff'}};background:#{{tradeType==4?'118fff':'fff'}};" bindtap="choseTradeType" id="4">讲座</view>
+      <view class="choose_user_item" style="color:#{{tradeType==5?'fff':'118fff'}};background:#{{tradeType==5?'118fff':'fff'}};" bindtap="choseTradeType" id="5">宣讲</view>
+      <view class="choose_user_item" style="color:#{{tradeType==6?'fff':'118fff'}};background:#{{tradeType==6?'118fff':'fff'}};" bindtap="choseTradeType" id="6">班会</view>
     </view>
   </view>
 

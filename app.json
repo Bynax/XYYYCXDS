@@ -2,7 +2,6 @@
   "pages": [
     "pages/start/start",
     "pages/index/index",
-    "pages/post/post",
     "pages/detail/detail",
     "pages/search/search",
     "pages/showinmap/showinmap",
@@ -10,8 +9,9 @@
     "pages/logs/logs",
     "pages/updAct/updAct",
     "pages/my/mylaunch/mylaunch",
-    "pages/my/mycollection/mycollection",
-    "pages/myinfo/myinfo"
+    "pages/myinfo/myinfo",
+     "pages/post/post"
+        
   ],
   "window": {
     "navigationBarTextStyle": "white",

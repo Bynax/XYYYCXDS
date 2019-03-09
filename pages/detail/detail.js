@@ -9,9 +9,6 @@ var publisherId; //活动发布者的Id
 var joinpId; //如果当前用户已经加入，该活动在联系表中的Id
 var eventMoreId; //当前活动的活动扩展表Id
 var commentlist;
-var joinlist;
-var likerlist;
-let commentText; //评论输入框内容
 Page({ 
   data: {
     accounts: ["微信号", "QQ号", "手机号"],

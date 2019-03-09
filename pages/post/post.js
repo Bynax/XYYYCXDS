@@ -5,6 +5,7 @@ var common = require('../template/getCode.js')
 var that;
 var myDate = new Date();
 var currentDate = new Date();
+var my_auth = wx.getStorageSync("my_auth")
 //格式化日期
 function formate_data(myDate) {
   let month_add = myDate.getMonth() + 1;
@@ -42,6 +43,73 @@ Page({
       this.hideNotice();
     }
   },
+  //选择地点
+  addressChange: function(e) {
+    wx.chooseLocation({
+      success: function(res) {
+        that.setData({
+          address: res.name,
+          longitude: res.longitude, //经度
+          latitude: res.latitude, //纬度
+        })
+        if (e.detail && e.detail.value) {
+          this.data.address = e.detail.value;
+        }
+      },
+      fail: function () {
+        wx.getSetting({
+          success: function (res) {
+            var statu = res.authSetting;
+            if (!statu['scope.userLocation']) {
+              wx.showModal({
+                title: '是否授权当前位置',
+                content: '需要获取您的地理位置，请确认授权，否则地图功能将无法使用',
+                success: function (tip) {
+                  if (tip.confirm) {
+                    wx.openSetting({
+                      success: function (data) {
+                        if (data.authSetting["scope.userLocation"] === true) {
+                          wx.showToast({
+                            title: '授权成功',
+                            icon: 'success',
+                            duration: 1000
+                          })
+                          //授权成功之后，再调用chooseLocation选择地方
+                          wx.chooseLocation({
+                            success: function (res) {
+                              obj.setData({
+                                addr: res.address
+                              })
+                            },
+                          })
+                        } else {
+                          wx.showToast({
+                            title: '授权失败',
+                            icon: 'success',
+                            duration: 1000
+                          })
+                        }
+                      }
+                    })
+                  }
+                }
+              })
+            }
+          },
+          fail: function (res) {
+            wx.showToast({
+              title: '调用授权窗口失败',
+              icon: 'success',
+              duration: 1000
+            })
+          }
+        })
+      },
+  
+      complete: function(e) {}
+    })
+  },
+
   showNotice: function(e) {
     this.setData({
       'notice_status': true
@@ -71,20 +139,34 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    console.log(wx.getStorageSync('my_auth'))
-    if(wx.getStorageSync('my_auth')==2){
-     console.log("permission deny")
+    //console.log(wx.getStorageSync('my_auth'))
+    if (my_auth == 0 || my_auth == 1) {
+      that = this;
+      that.setData({ //初始化数据
+        src: "",
+        isSrc: false,
+        ishide: "0",
+        autoFocus: true,
+        isLoading: false,
+        loading: true,
+        isdisabled: false
+      })
+      return true;
+    } else {
+      wx.showModal({
+        title: '提示',
+        content: '您没有访问权限！',
+        showCancel: false,
+        success: function(e) {
+          if (true) {
+            wx.switchTab({
+              url: '../index/index',
+            });
+          }
+        }
+      })
+      return false
     }
-    that = this;
-    that.setData({ //初始化数据
-      src: "",
-      isSrc: false,
-      ishide: "0",
-      autoFocus: true,
-      isLoading: false,
-      loading: true,
-      isdisabled: false
-    })
   },
 
   /**
@@ -98,19 +180,23 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    var myInterval = setInterval(getReturn, 500); ////半秒定时查询
-    function getReturn() {
-      wx.getStorage({
-        key: 'user_openid',
-        success: function(ress) {
-          if (ress.data) {
-            clearInterval(myInterval)
-            that.setData({
-              loading: true
-            })
+    var tag = this.onLoad()
+    console.log(tag)
+    if (tag) {
+      var myInterval = setInterval(getReturn, 500); ////半秒定时查询
+      function getReturn() {
+        wx.getStorage({
+          key: 'user_openid',
+          success: function(ress) {
+            if (ress.data) {
+              clearInterval(myInterval)
+              that.setData({
+                loading: true
+              })
+            }
           }
-        }
-      })
+        })
+      }
     }
   },
 
@@ -137,27 +223,6 @@ Page({
   bindTypeChange: function(e) {
     this.setData({
       typeIndex: e.detail.value
-    })
-  },
-  //选择地点
-  addressChange: function(e) {
-    this.addressChoose(e);
-  },
-  addressChoose: function(e) {
-    var that = this;
-    wx.chooseLocation({
-      success: function(res) {
-        that.setData({
-          address: res.name,
-          longitude: res.longitude, //经度
-          latitude: res.latitude, //纬度
-        })
-        if (e.detail && e.detail.value) {
-          this.data.address = e.detail.value;
-        }
-      },
-      fail: function(e) {},
-      complete: function(e) {}
     })
   },
 
@@ -208,24 +273,25 @@ Page({
     var longitude = this.data.longitude; //经度
     var latitude = this.data.latitude; //纬度
     var switchHide = e.detail.value.switchHide;
-    var num_limit = parseInt(e.detail.value.num_limit);
+    
+    var num_limit = e.detail.value.num_limit==null? -1:parseInt(e.detail.value.num_limit);
     console.log(num_limit);
     var discription = e.detail.value.discription;
     //------发布者真实信息------
     var realname = e.detail.value.realname;
     var contactindex = this.data.accountIndex;
     if (contactindex == 0) {
-      var contactWay = "微信号";
-    } else if (contactindex == 1) {
-      var contactWay = "QQ号";
-    } else if (contactindex == 2) {
       var contactWay = "手机号";
+    } else if (contactindex == 1) {
+      var contactWay = "微信号";
+    } else if (contactindex == 2) {
+      var contactWay = "QQ号";
     }
     var contactValue = e.detail.value.contactValue;
     var wxReg = new RegExp("^[a-zA-Z]([-_a-zA-Z0-9]{5,19})+$");
     var qqReg = new RegExp("[1-9][0-9]{4,}");
     var phReg = /^1[345789]\d{9}$/;
-    var limitReg = new RegExp("^[0-9]*$")
+    var limitReg = new RegExp("^(0|[1-9][0-9]*|-[1-9][0-9]*)$")
     var nameReg = new RegExp("^[\u4e00-\u9fa5]{2,4}$");
     //先进行表单非空验证
     if (title == "") {

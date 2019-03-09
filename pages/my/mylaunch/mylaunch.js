@@ -87,23 +87,11 @@ Page({
           var endtime = results[i].get("endtime");
           var address = results[i].get("address");
           var acttypename = results[i].get("acttypename");
-          var peoplenum = results[i].get("peoplenum");
-          var likenum = results[i].get("likenum");
-          var liker = results[i].get("liker");
-          var isLike = 0;
-          var commentnum = results[i].get("commentnum");
           var id = results[i].id;
           var createdAt = results[i].createdAt;
           var pubtime = util.getDateDiff(createdAt);
           var publisherName = results[i].get("publisher").nickname
           var publisherPic = results[i].get("publisher").userPic
-          var _url
-          var actpic = results[i].get("actpic");
-          if (actpic) {
-            _url = results[i].get("actpic").url;
-          } else {
-            _url = "http://bmob-cdn-14867.b0.upaiyun.com/2017/12/01/89a6eba340008dce801381c4550787e4.png";
-          }
           var status = app.globalData.statusL[results[i].get('status')]
           var jsonA;
           jsonA = {
@@ -113,16 +101,11 @@ Page({
             "acttypename": acttypename || '',
             "endtime": endtime || '',
             "address": address || '',
-            "peoplenum": peoplenum || '',
             "id": id || '',
             "publisherPic": publisherPic || '',
             "publisherName": publisherName || '',
             "publisherId": publisherId || '',
             "pubtime": pubtime || '',
-            "actPic": _url || '',
-            "likenum": likenum,
-            "commentnum": commentnum,
-            "is_liked": isLike || '',
             "status": status || '',
           }
           molist.push(jsonA);
@@ -176,6 +159,7 @@ Page({
 
   // 点击活动进入活动详情页面
   click_activity: function (e) {
+    
     let actid = e.currentTarget.dataset.actid;
     let pubid = e.currentTarget.dataset.pubid;
     let user_key = wx.getStorageSync('user_key');

@@ -83,12 +83,14 @@
 }
 .wxSearchHistoryEmpty{
   text-align: center;
+  background-color: #eee;
   height: 50px;
   line-height: 50px;
   font-size: 12px;
 }
 .wxSearchDeleteAllBtn{
   height: 50px;
+  background-color: #eee;
   line-height: 50px;
   text-align: center;
   font-size: 12px;

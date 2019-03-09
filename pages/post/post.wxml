@@ -23,7 +23,7 @@
       </view>
 
       <!-- 活动地点 -->
-      <view class="mod t-address" bindtap="chooseLocation">
+      <view class="mod t-address" >
         <text class="key">活动地点</text>
         <text name="address" class="value" bindtap="addressChange" value="{{address}}">{{address}}</text>
         <image class="arrow-r" src="/static/images/arrow-r-0.png"></image>
