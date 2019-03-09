@@ -2,8 +2,7 @@
 //获取应用实例
 var Bmob = require("../../utils/bmob.js");
 Bmob.initialize("b50831e8a77f6b9a3b0cf69e4eb3806c", "10de7e320051c765fb8a341cc7cd720c");
-//var app = getApp();
-//var role = Bmob.Object.extend("Role");
+var app = getApp();
 Page({
   data: {
     remind: '加载中',
@@ -23,7 +22,7 @@ Page({
       console.log("授权失败")
     } else {
       try {
-        getApp().userInfo = e.detail.userInfo
+        app.userInfo = e.detail.userInfo;
         var value = wx.getStorageSync('user_openid')
         if (value) {
           wx.switchTab({
@@ -48,6 +47,7 @@ Page({
                               wx.setStorageSync('my_nick', user.get("nickname"))
                               wx.setStorageSync('my_username', user.get("username"))
                               wx.setStorageSync('my_avatar', user.get("userPic"))
+                              wx.setStorageSync('my_auth', user.get('auth1'))
                               wx.switchTab({
                                 url: '/pages/index/index',
                               });
@@ -62,8 +62,9 @@ Page({
                               user.set("nickname", nickName);
                               user.set("userPic", avatarUrl);
                               user.set("userData", userData);
-                              var role = Bmob.Object.createWithoutData("Role","hSdK555B");
-                              user.set("auth",role)
+                              user.set("auth1",2)
+                              // var role = Bmob.Object.createWithoutData("Role","hSdK555B");
+                              // user.set("auth",role)
                               user.signUp(null, {
                                 success: function(result) {
                                   console.log('注册成功');
@@ -100,7 +101,7 @@ Page({
               }
             },
             complete: function(e) {
-              console.log('获取用户登录态失败2！' + e)
+              //console.log('获取用户登录态失败2！' + e)
             }
           });
         }

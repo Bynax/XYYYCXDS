@@ -1,6 +1,5 @@
 //app.js
 import Touches from './utils/Touches.js'
-//var Bmob = require("utils/bmob.js");
 var common = require("utils/common.js");
  const __utils = require('utils/util')
 App({

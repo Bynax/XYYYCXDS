@@ -75,7 +75,6 @@ Page({
 
   //数据存储
   onSetData: function (data) {
-    console.log(data.length);
     let page = this.data.currentPage + 1;
     //设置数据
     data = data || [];
@@ -87,7 +86,6 @@ Page({
 
   //数据存储
   onSetData: function (data) {
-    console.log(data.length);
     let page = this.data.currentPage + 1;
     //设置数据
     data = data || [];
@@ -105,7 +103,6 @@ Page({
     var Diary = Bmob.Object.extend("Events");
     var query = new Bmob.Query(Diary);
     query.limit(self.data.limitPage);
-    console.log(self.data.limitPage);
     query.skip(3 * self.data.currentPage);
     query.descending("createdAt"); //按照时间降序
     query.include("publisher");
