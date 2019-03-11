@@ -217,7 +217,7 @@ Page({
                 var acttypename = getTypeName(acttype);
                 var endtime = result[0].get("endtime");
                 var createdAt = result[0].createdAt;
-                var pubtime = util.getDateDiff(createdAt);
+                var pubtime = util.getDateDiff(createdAt );
                 var address = result[0].get("address");
                 var longitude = result[0].get("longitude");//经度
                 var latitude = result[0].get("latitude");//纬度

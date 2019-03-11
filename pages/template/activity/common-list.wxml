@@ -1,7 +1,7 @@
 <template name="tempCommonList">
   <view class="common-list">
     <block wx:key="id" wx:for="{{postsList}}">
-      <view class="list-item has-img" index="{{index}}" id="{{item.id}}" data-actid="{{item.id}}" data-pubid='{{item.publisherId}}' bindtap="click_activity">
+      <view class="activity" index="{{index}}" id="{{item.id}}" data-actid="{{item.id}}" data-pubid='{{item.publisherId}}' bindtap="click_activity">
         <view class="list_header">
           <view class="list_header_left">
             <image mode="aspectFill" src="{{item.publisherPic}}" wx:if="publisherPic"></image>
@@ -14,6 +14,7 @@
           </view>
         </view>
         <view class="horizontal">
+
           <text class="title">{{ item.title }}</text>
           <view class="list_title_right">
             <!-- 此处设置活动进行状态 -->

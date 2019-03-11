@@ -11,26 +11,15 @@ const FAST_SPEED_DISTANCE = 5;
 const FAST_SPEED_EFF_Y = 50;
 
 var my_nick = wx.getStorageSync('my_nick')
+console.log("my_nick",my_nick)
 var my_sex = wx.getStorageSync('my_sex')
 var my_avatar = wx.getStorageSync('my_avatar')
 var my_auth = wx.getStorageSync('my_auth')
-var fItemName = ""
-var sItemName = ""
-
-if (my_auth == 1 || my_auth == 2){
-  fItemName = "我发起的活动"
-  sItemName = "未完成的活动"
-}else if(my_auth==0){
-  fItemName = "全部活动"
-  sItemName = "待审批活动"
-}
 
 Page({
   data: {
     my_nick: my_nick,
     my_sex: my_sex,
-    fSpan:fItemName,
-    sSpan:sItemName,
     my_avatar: my_avatar,
     userInfo: [],
     dialog: false,
@@ -77,19 +66,13 @@ Page({
     }
   },
   
-  //进入我的收藏
-  click_myCollection: function () {
+  //进入我的发起但未完成
+  click_notFinish: function () {
     if (!this.buttonClicked) {
       util.buttonClicked(this);
-      if (my_auth == 1 || my_auth == 2){
       wx.navigateTo({
-        url: '/pages/my/mycollection/mycollection',
-      });}
-      if (my_auth == 0){
-        wx.navigateTo({
-          url: '/pages/my/mycollection/myjoin',
-        });
-      }
+        url: '/pages/my/myjoin/myjoin',
+      });
     }
   },
 //--------------------------------------------------------------------------------------------------------

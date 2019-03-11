@@ -5,11 +5,11 @@
       <image src="/static/images/website-search.png" class="cover"></image>
     </view>
     <view class="topic-content-title">
-      <text>我的活动</text>
+      <text>活动汇总</text>
     </view>
     <view class="topic-content-title-line"></view>
     <view class="topic-content-brief">
-      <text>共发布{{totalCount}}个活动</text>
+      <text>共计{{totalCount}}个活动</text>
     </view>
   </view>
 </view>

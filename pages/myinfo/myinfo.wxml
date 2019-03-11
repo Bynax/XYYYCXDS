@@ -5,28 +5,20 @@
       <image class="user-face" src="{{my_avatar}}"></image>
       <view class='user-info'>
         <text>{{my_nick}}</text>
-
-        <image wx:if="{{my_sex == 1}}" src="/static/images/m3.png"></image>
-        <image wx:if="{{my_sex == 2}}" src="/static/images/w3.png"></image>
-        <image wx:if="{{my_sex == 0 || my_sex==''}}" src="/static/images/sex.png"></image>
       </view>
     </view>
     <view class="thirdblock" style='margin-top:40px;'>
       <view class="itemself" bindtap="click_myLaunch" data-index="1">
-        <image src="/static/images/icon/times.png" class="itemself_ico"></image>
-        <span>{{fSpan}}</span>
+        <image src="/static/images/icon/all.png" class="itemself_ico"></image>
+        <span>全部活动</span>
       </view>
-      <!-- <view class="itemself" bindtap="click_myJoin" data-index="2">
-        <image src="/static/images/icon/jssq.png" class="itemself_ico"></image>
-        <span>我的加入</span>
+      <view class="itemself" bindtap="click_notFinish" data-index="3">
+        <image src="/static/images/icon/todo.png" class="itemself_ico"></image>
+        <span>待审批活动</span>
       </view>
-      <view class="itemself" bindtap="click_myCollection" data-index="3">
-        <image src="/static/images/icon/status.png" class="itemself_ico"></image>
-        <span>我的收藏</span>
-      </view> -->
-      <view class="itemself" bindtap="click_myCollection" data-index="3">
-        <image src="/static/images/icon/status.png" class="itemself_ico"></image>
-        <span>{{sSpan}}</span>
+       <view class="itemself" bindtap="click_Finished" data-index="3">
+        <image src="/static/images/icon/finished.png" class="itemself_ico"></image>
+        <span>已完成活动</span>
       </view>
     </view>
   </view>

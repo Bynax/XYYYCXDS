@@ -20,7 +20,7 @@ Page({
    */
   data: {
     notice_status: false,
-    accounts: ["微信号", "QQ号", "手机号"],
+    accounts: ["手机号","微信号", "QQ号"],
     accountIndex: 0,
     peopleHide: false,
     isAgree: false,
@@ -397,6 +397,7 @@ Page({
                   contact.set("event", event);
                   contact.set("contactWay", contactWay);
                   contact.set("contactValue", contactValue);
+                  contact.set("realName",realname);
                   contact.save();
                 },
               })

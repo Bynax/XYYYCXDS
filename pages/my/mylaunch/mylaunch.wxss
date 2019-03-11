@@ -197,6 +197,20 @@ swiper-item, swiper-item image {
   border-bottom: 10rpx solid #f4f4f4;
 }
 
+.activity .time {
+  font-size: 28rpx;
+  color: #999;
+  text-align: justify;
+  padding-top: 10rpx;
+}
+
+.activity .location {
+  font-size: 28rpx;
+  color: #999;
+  text-align: justify;
+}
+
+
 .horizontal {
   display: inline;
   padding-top: 18rpx;

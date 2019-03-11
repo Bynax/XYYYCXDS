@@ -1,4 +1,5 @@
 <!-- index.wxml -->
+<import src="../template/activity/common-list.wxml" />
 <view class="mpage {{!ui.tStart? 'withAnimate': ''}}" style="left:{{ui.offsetLeft}}px;width: {{ui.windowWidth}}px;" bindtouchstart="handlerStart" catchtouchmove="handlerMove" bindtouchcancel="handlerCancel" bindtouchend="handlerEnd" bindtap="handlerPageTap">
   <scroll-view bindscroll="" scroll-y style="height: 100%;">
     <view class="search">
@@ -15,48 +16,26 @@
     </view>
 
 
-    <view class="activities">
-      <view class="subtitle">
-        <image src="/static/images/ic_activity.png" mode="aspectFit" />
-        <text>活动列表</text>
-        <space/>
-        <button bindtap="refresh">点击刷新</button>
+    <view class="container">
+      <view wx:if="{{postsList.length == 0}}">
+        <view class="imgitem">
+          <image src="/static/images/norecord1.png" class="empty_img"></image>
+        </view>
+        <view class="txtitem">
+          <text class="t28rpx">暂无发布活动</text>
+        </view>
       </view>
-
-      <view class="activity" wx:for="{{postsList}}" wx:key="id">
-        <view class="list_header">
-          <view class="list_header_left">
-            <image mode="aspectFill" src="{{item.publisherPic}}" wx:if="publisherPic"></image>
-            <view>{{item.publisherName}}</view>
-          </view>
-          <view class="content-date list_header_right">
-            <image src="/static/images/calendar.png"></image>
-            <text>{{item.pubtime}}</text>
-
+      <view wx:if="{{postsList.length > 0}}">
+        <view class="index-container">
+          <template is="tempCommonList" data="{{postsList}}" />
+          <view class="loadingmore">
+            <view wx:if="{{!isEmpty}}">
+              <button class="more-button" formType="submit" size="mini" bindtap="loadMore">加载更多...</button>
+            </view>
+            <view class="no-more" wx:if="{{isEmpty}}">---无更多活动---</view>
           </view>
         </view>
-        <view class="horizontal">
-          <!-- <view class="tag tag_{{item.acttype}}">{{item.acttypename}}</view> -->
-          <text class="title">{{ item.title }}</text>
-          <view class="list_title_right">
-            <!-- 此处设置活动进行状态 -->
-            <text class="border">{{item.status}}</text>
-
-          </view>
-        </view>
-
-        <text class="time">有效时间：{{ item.endtime }}</text>
-        <text class="location">活动地点：{{ item.address }}</text>
-
       </view>
-
     </view>
-    <view class="loadingmore">
-      <view wx:if="{{!isEmpty}}">
-        <button class="more-button" formType="submit" size="mini" bindtap="loadMore">加载更多...</button>
-      </view>
-      <view class="no-more" wx:if="{{isEmpty}}">---无更多活动---</view>
-    </view>
-    <!-- <tab-shadow/> -->
   </scroll-view>
 </view>
