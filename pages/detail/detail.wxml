@@ -5,12 +5,7 @@
 <!--评论输入弹窗-->
 <view class="weui-toptips weui-toptips_warn" wx:if="{{showTopTips}}">{{TopTips}}</view>
 <view class="dialog" wx:if="{{showCommentDialog}}" bindtap="hideCommentDialog"></view>
-<view class="dialog_content" wx:if="{{showCommentDialog}}">
-  <input bindinput="commentText" placeholder="{{commentInputHolder}}" focus="true" class="dialog-content-input" />
-  <view>
-    <button catchtap="publishComment" class="dialog-content-btn">评论</button>
-  </view>
-</view>
+
 <!--pages/detail/detail.wxml-->
 <scroll-view scroll-y="true" class="all_scr" style="padding-bottom:112rpx;">
   <!--活动封面-->
@@ -27,11 +22,7 @@
       <view>
         <text>发起者: {{publisherName}}</text>
       </view>
-      <view>
-        <text style="margin-right:12px;"></text>
-        <text style="margin-right:12px;">点赞量: {{agreeNum}}</text>
-        <text>评论量: {{commNum}}</text>
-      </view>
+      
     </view>
 
     <!--活动地点item，当经纬度都为0时，不渲染-->
@@ -89,20 +80,7 @@
       </view>
     </view>
 
-    <view style="height:40rpx;background:#f5f5f5"></view>
-    <!--详情,报名情况（只有填写加入的人才能看到报名情况）-->
-    <view class="sort">
-      <view class="xiangqing" bindtap="changePage">
-        <text class="sort1" id="0">详情
-      </text>
-        <view class="detail-tabar-border {{status==0?'detail-tabar-bg':''}}"></view>
-      </view>
-      <view wx:if="{{join ==1 || join == 3}}" class="xiangqing" bindtap="changePage">
-        <text class="sort1" id="1">联系
-      </text>
-        <view class="detail-tabar-border {{status==1?'detail-tabar-bg':''}}"></view>
-      </view>
-    </view>
+    
 
     <!--活动内容-->
     <view wx:if="{{status==0}}">

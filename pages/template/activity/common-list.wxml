@@ -25,8 +25,8 @@
         <text class="time">有效时间：{{ item.endtime }}</text>
         <text class="location">活动地点：{{ item.address }}</text>
 
-</view>
+      </view>
     </block>
-    </view>
+  </view>
 
 </template>
