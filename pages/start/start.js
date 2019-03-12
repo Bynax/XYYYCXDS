@@ -40,6 +40,8 @@ Page({
                         Bmob.User.logIn(nickName, userData.openid, {
                           success: function(user) {
                             try {
+                              console.log(user.get('userData').openid)
+                              console.log(user.id)
                               wx.setStorageSync('user_openid', user.get('userData').openid)
                               wx.setStorageSync('user_id', user.id)
                               wx.setStorageSync('my_nick', user.get("nickname"))
@@ -50,7 +52,9 @@ Page({
                                 url: '/pages/index/index',
                               });
                             } catch (e) {}
+                            console.log(wx.getStorageSync("my_auth"))
                             console.log("登录成功");
+                            //console.log("error\t"+e.message+"\t"+e.name)
                           },
                           error: function(user, error) {
                             if (error.code == '101') {
@@ -60,9 +64,7 @@ Page({
                               user.set("nickname", nickName);
                               user.set("userPic", avatarUrl);
                               user.set("userData", userData);
-                              user.set("auth1", user.get('auth1'))
-                              // var role = Bmob.Object.createWithoutData("Role","hSdK555B");
-                              // user.set("auth",role)
+                              user.set("auth1", 2)
                               user.signUp(null, {
                                 success: function(result) {
                                   console.log('注册成功');
@@ -72,7 +74,7 @@ Page({
                                     wx.setStorageSync('my_nick', user.get("nickname"))
                                     wx.setStorageSync('my_username', user.get("username"))
                                     wx.setStorageSync('my_avatar', user.get("userPic"))
-                                    wx.setStorageSync('my_auth', 2)
+                                    wx.setStorageSync('my_auth', user.get("auth1"))
                                     wx.switchTab({
                                       url: '/pages/index/index',
                                     });

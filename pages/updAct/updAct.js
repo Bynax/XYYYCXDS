@@ -423,15 +423,11 @@ Page({
 //根据活动类型获取活动类型名称
 function getTypeName(acttype) {
   var acttypeName = "";
-  if (acttype == 1) acttypeName = "运动";
-  else if (acttype == 2) acttypeName = "游戏";
-  else if (acttype == 3) acttypeName = "交友";
-  else if (acttype == 4) acttypeName = "旅行";
-  else if (acttype == 5) acttypeName = "读书";
-  else if (acttype == 6) acttypeName = "竞赛";
-  else if (acttype == 7) acttypeName = "电影";
-  else if (acttype == 8) acttypeName = "音乐";
-  else if (acttype == 9) acttypeName = "其他";
+  if (acttype == 1) acttypeName = "党支部";
+  else if (acttype == 2) acttypeName = "学苑";
+  else if (acttype == 3) acttypeName = "团委";
+  else if (acttype == 4) acttypeName = "研会";
+  else if (acttype == 5) acttypeName = "社团";
   return acttypeName;
 }
 //根据联系方式确定序号

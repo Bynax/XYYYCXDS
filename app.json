@@ -9,10 +9,10 @@
     "pages/logs/logs",
     "pages/updAct/updAct",
     "pages/my/mylaunch/mylaunch",
-    "pages/my/myjoin/myjoin",
     "pages/myinfo/myinfo",
-     "pages/post/post"
-        
+    "pages/post/post",
+    "pages/my/todopage/todo",
+    "pages/my/finished/finished"
   ],
   "window": {
     "navigationBarTextStyle": "white",

@@ -2,12 +2,13 @@ var common = require('../../../utils/common.js')
 var Bmob = require("../../../utils/bmob.js");
 var util = require('../../../utils/util.js');
 var app = getApp()
+var my_auth;
 var that;
 Page({
   data: {
     postsList: [], //总的活动
     currentPage: 0, //要跳过查询的页数
-    limitPage: 3,//首先显示3条数据（之后加载时都增加3条数据，直到再次加载不够3条）
+    limitPage: 3,
     isEmpty: false, //当前查询出来的数据是否为空
     totalCount: 0, //总活动数量
     endPage: 0, //最后一页加载多少条
@@ -30,112 +31,53 @@ Page({
     });
   },
 
-  //获取总的加入数
+  //获取总的发起数
   getAll: function () {
     self = this;
-    var Diary = Bmob.Object.extend("Contacts");
+    var self = this;
+    //获取详询活动信息
+    var Diary = Bmob.Object.extend("Events");
     var query = new Bmob.Query(Diary);
-    query.equalTo("currentUser", wx.getStorageSync("user_id"));
+    query.limit(self.data.limitPage);
+    my_auth = wx.getStorageSync("my_auth")
+    if (my_auth == null) {
+      //console.log("hello")
+
+    }
+    if (my_auth == 0) {
+      query.equalTo("status",2)
+     } else {
+      query.equalTo("status", 2)
+      query.equalTo("publisher", wx.getStorageSync("user_id"));
+    }
     query.count({
       success: function (count) {
         var totalPage = 0;
         var endPage = 0;
-        if (count % self.data.limitPage == 0) {//如果总数的为偶数
+        if (count % self.data.limitPage == 0) { //如果总数的为偶数
           totalPage = parseInt(count / self.data.limitPage);
+          console.log("ou", totalPage)
         } else {
           var lowPage = parseInt(count / self.data.limitPage);
           endPage = count - (lowPage * self.data.limitPage);
           totalPage = lowPage + 1;
+          console.log("ji", totalPage)
+
         }
         self.setData({
           totalCount: count,
           endPage: endPage,
           totalPage: totalPage
         })
-        if (self.data.currentPage + 1 == self.data.totalPage) {
+        if (self.data.currentPage + 1 >= self.data.totalPage) {
           self.setData({
             isEmpty: true
           })
         }
-        console.log("共有" + count + " 条记录");
-        console.log("共有" + totalPage + "页");
-        console.log("最后一页加载" + endPage + "条");
-      },
-    });
-  },
 
-  //获取首页列表文章
-  fetchPostsData: function (data, endpage) {
-    var self = this;
-    //获取详询活动信息
-    var molist = new Array();
-    var Diary = Bmob.Object.extend("Contacts");
-    var query = new Bmob.Query(Diary);
-    query.limit(self.data.limitPage);
-    query.skip(3 * self.data.currentPage);
-    query.equalTo("currentUser", wx.getStorageSync("user_id")); //查询出联系表中是我的记录
-    query.include("event");
-    query.descending("createAt");
-    query.include("publisher");
-    query.find({
-      success: function (results) {
-        for (var i = 0; i < results.length; i++) {
-          var publisherId = results[i].get("publisher").objectId;
-          var title = results[i].get("event").title;
-          var content = results[i].get("event").content;
-          var acttype = results[i].get("event").acttype;
-          var endtime = results[i].get("event").endtime;
-          var address = results[i].get("event").address;
-          var acttypename = results[i].get("event").acttypename;
-          var peoplenum = results[i].get("event").peoplenum;
-          var likenum = results[i].get("event").likenum;
-          var liker = results[i].get("event").liker;
-          var isLike = 0;
-          var commentnum = results[i].get("event").commentnum;
-          var id = results[i].get("event").objectId;
-          var createdAt = results[i].createdAt;
-          var pubtime = util.getDateDiff(createdAt);
-          var publisherName = results[i].get("publisher").nickname;
-          var publisherPic = results[i].get("publisher").userPic;
-          var _url
-          var actpic = results[i].get("event").actpic;
-          if (actpic) {
-            _url = results[i].get("event").actpic.url;
-          } else {
-            _url = "http://bmob-cdn-14867.b0.upaiyun.com/2017/12/01/89a6eba340008dce801381c4550787e4.png";
-          }
-          var jsonA;
-          jsonA = {
-            "title": title || '',
-            "content": content || '',
-            "acttype": acttype || '',
-            "acttypename": acttypename || '',
-            "endtime": endtime || '',
-            "address": address || '',
-            "peoplenum": peoplenum || '',
-            "id": id || '',
-            "publisherPic": publisherPic || '',
-            "publisherName": publisherName || '',
-            "publisherId": publisherId || '',
-            "pubtime": pubtime || '',
-            "actPic": _url || '',
-            "likenum": likenum,
-            "commentnum": commentnum,
-            "is_liked": isLike || ''
-          }
-          molist.push(jsonA);
-          console.log(molist);
-        }
-        self.onSetData(molist, self.data.currentPage);
-        
-        setTimeout(function () {
-          wx.hideLoading();
-        }, 900);
       },
-      error: function (error) {
-        console.log(error)
-      }
-    })
+
+    });
   },
 
   //加载下一页
@@ -148,13 +90,13 @@ Page({
     setTimeout(function () {
       wx.hideLoading()
     }, 1000)
-    var self = this;
+    var self = this
     self.setData({
       currentPage: self.data.currentPage + 1
     });
     console.log("当前页" + self.data.currentPage);
     //先判断是不是最后一页
-    if (self.data.currentPage +1 == self.data.totalPage) {
+    if (self.data.currentPage + 1 >= self.data.totalPage) {
       self.setData({
         isEmpty: true
       })
@@ -173,6 +115,73 @@ Page({
 
   },
 
+  //获取首页列表文章
+  fetchPostsData: function (data) {
+    var self = this;
+    //获取详询活动信息
+    var molist = new Array();
+    var Diary = Bmob.Object.extend("Events");
+    var query = new Bmob.Query(Diary);
+    if (my_auth == null) {
+      //console.log("hello")
+      query.equalTo("status",2)
+
+    }
+    if (my_auth == 0) { 
+      query.equalTo("status", 2)
+    } else {
+      query.equalTo("status", 2)
+      query.equalTo("publisher", wx.getStorageSync("user_id"));
+    }
+    query.limit(self.data.limitPage);
+    query.skip(self.data.limitPage * self.data.currentPage);
+    query.descending("createdAt"); //按照时间降序
+    query.include("publisher");
+    query.find({
+      success: function (results) {
+        for (var i = 0; i < results.length; i++) {
+          var publisherId = results[i].get("publisher").objectId;
+          var title = results[i].get("title");
+          var content = results[i].get("content");
+          var acttype = results[i].get("acttype");
+          var endtime = results[i].get("endtime");
+          var address = results[i].get("address");
+          var peoplenum = results[i].get("peoplenum");
+          var id = results[i].id;
+          var createdAt = results[i].createdAt;
+          var pubtime = util.getDateDiff(createdAt);
+          var publisherName = results[i].get("publisher").nickname;
+          var publisherPic = results[i].get("publisher").userPic;
+          var status = results[i].get("status")
+          var jsonA;
+          jsonA = {
+            "title": title || '',
+            "content": content || '',
+            "acttype": acttype || '',
+            "endtime": endtime || '',
+            "address": address || '',
+            "peoplenum": peoplenum || '',
+            "id": id || '',
+            "publisherPic": publisherPic || '',
+            "publisherName": publisherName || '',
+            "publisherId": publisherId || '',
+            "pubtime": pubtime || '',
+            "status": app.globalData.statusL[status] || '',
+
+          }
+          molist.push(jsonA);
+        }
+        self.onSetData(molist, self.data.currentPage);
+
+        setTimeout(function () {
+          wx.hideLoading();
+        }, 900);
+      },
+      error: function (error) {
+        console.log(error)
+      }
+    })
+  },
   // 点击活动进入活动详情页面
   click_activity: function (e) {
     let actid = e.currentTarget.dataset.actid;

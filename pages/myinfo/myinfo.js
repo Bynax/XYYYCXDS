@@ -9,18 +9,12 @@ const MENU_WIDTH_SCALE = 0.82;
 const FAST_SPEED_SECOND = 300;
 const FAST_SPEED_DISTANCE = 5;
 const FAST_SPEED_EFF_Y = 50;
-
-var my_nick = wx.getStorageSync('my_nick')
-console.log("my_nick",my_nick)
-var my_sex = wx.getStorageSync('my_sex')
-var my_avatar = wx.getStorageSync('my_avatar')
-var my_auth = wx.getStorageSync('my_auth')
+var my_auth ;
 
 Page({
   data: {
-    my_nick: my_nick,
-    my_sex: my_sex,
-    my_avatar: my_avatar,
+    my_nick:"",
+    my_avatar:"",
     userInfo: [],
     dialog: false,
     autoplay: false,
@@ -36,16 +30,19 @@ Page({
 
   },
 
-
-
-  onLoad(t) {
+  onLoad:function() {
+    my_auth = wx.getStorageSync('my_auth')
+    this.setData({
+      my_nick:wx.getStorageSync("my_nick"),
+      my_avatar:wx.getStorageSync("my_avatar")
+    })
    
   },
 
   onShow: function (e) {
     var that = this
+    this.onLoad()
     that.data.userInfo = app.userInfo
-    console.log(my_avatar+my_nick)
     wx.getSystemInfo({
       success: (res) => {
         this.setData({
@@ -71,7 +68,17 @@ Page({
     if (!this.buttonClicked) {
       util.buttonClicked(this);
       wx.navigateTo({
-        url: '/pages/my/myjoin/myjoin',
+        url: '/pages/my/todopage/todo',
+      });
+    }
+  },
+
+  //进入我的发起但未完成
+  click_Finished: function () {
+    if (!this.buttonClicked) {
+      util.buttonClicked(this);
+      wx.navigateTo({
+        url: '/pages/my/finished/finished',
       });
     }
   },

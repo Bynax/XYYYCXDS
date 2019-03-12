@@ -16,3 +16,5 @@ node_modules/
 # ignore utils directory
 utils/
 
+pages/start/
+

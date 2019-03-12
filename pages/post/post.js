@@ -5,7 +5,7 @@ var common = require('../template/getCode.js')
 var that;
 var myDate = new Date();
 var currentDate = new Date();
-var my_auth = wx.getStorageSync("my_auth")
+var my_auth;
 //格式化日期
 function formate_data(myDate) {
   let month_add = myDate.getMonth() + 1;
@@ -139,7 +139,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    //console.log(wx.getStorageSync('my_auth'))
+    my_auth= wx.getStorageSync("my_auth")
+    console.log("my_auth",my_auth)
     if (my_auth == 0 || my_auth == 1) {
       that = this;
       that.setData({ //初始化数据

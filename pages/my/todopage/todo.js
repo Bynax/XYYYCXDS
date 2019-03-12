@@ -22,7 +22,7 @@ Page({
   },
 
   //数据存储
-  onSetData: function(data) {
+  onSetData: function (data) {
     let page = this.data.currentPage + 1;
     //设置数据
     data = data || [];
@@ -32,7 +32,7 @@ Page({
   },
 
   //获取总的发起数
-  getAll: function() {
+  getAll: function () {
     self = this;
     var self = this;
     //获取详询活动信息
@@ -40,20 +40,24 @@ Page({
     var query = new Bmob.Query(Diary);
     query.limit(self.data.limitPage);
     my_auth = wx.getStorageSync("my_auth")
-    if(my_auth==null){
+    if (my_auth == null) {
       //console.log("hello")
 
     }
-    if (my_auth == 0) {} else {
+    if (my_auth == 0) {
+      query.equalTo("status", 1)
+
+     } else {
+      query.equalTo("status", 1)
       query.equalTo("publisher", wx.getStorageSync("user_id"));
     }
     query.count({
-      success: function(count) {
+      success: function (count) {
         var totalPage = 0;
         var endPage = 0;
         if (count % self.data.limitPage == 0) { //如果总数的为偶数
           totalPage = parseInt(count / self.data.limitPage);
-          console.log("ou",totalPage)
+          console.log("ou", totalPage)
         } else {
           var lowPage = parseInt(count / self.data.limitPage);
           endPage = count - (lowPage * self.data.limitPage);
@@ -71,20 +75,20 @@ Page({
             isEmpty: true
           })
         }
-       
+
       },
-      
+
     });
   },
 
   //加载下一页
-  loadMore: function() {
+  loadMore: function () {
     wx.showLoading({
       title: '正在加载',
       mask: true
     });
     //一秒后关闭加载提示框
-    setTimeout(function() {
+    setTimeout(function () {
       wx.hideLoading()
     }, 1000)
     var self = this
@@ -92,7 +96,7 @@ Page({
       currentPage: self.data.currentPage + 1
     });
     console.log("当前页" + self.data.currentPage);
-    console.log("encpage",self.data.endPage)
+    console.log("encpage", self.data.endPage)
     //先判断是不是最后一页
     if (self.data.currentPage + 1 >= self.data.totalPage) {
       self.setData({
@@ -109,7 +113,7 @@ Page({
     }
   },
 
-  onShow: function() {
+  onShow: function () {
 
   },
 
@@ -122,9 +126,11 @@ Page({
     var query = new Bmob.Query(Diary);
     if (my_auth == null) {
       //console.log("hello")
-
     }
-    if (my_auth == 0) { } else {
+    if (my_auth == 0) { 
+      query.equalTo("status", 0)
+    } else {
+      query.equalTo("status", 0)
       query.equalTo("publisher", wx.getStorageSync("user_id"));
     }
     query.limit(self.data.limitPage);
@@ -177,7 +183,7 @@ Page({
     })
   },
   // 点击活动进入活动详情页面
-  click_activity: function(e) {
+  click_activity: function (e) {
     let actid = e.currentTarget.dataset.actid;
     let pubid = e.currentTarget.dataset.pubid;
     let user_key = wx.getStorageSync('user_key');
