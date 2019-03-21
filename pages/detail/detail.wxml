@@ -78,14 +78,28 @@
 </scroll-view>
 
 <!--改变状态-->
-<view class="bottom">
+<view class="{{showViewall?'bright789_view_show':'bright789_view_hide'}}">
+<view class="bottom {{showView?'bright789_view_show':'bright789_view_hide'}}">
   <view class="bottom-beta-box">
     <button class="textarea1_case_sign" bindtap="modify_info">
       <view>修改信息</view>
     </button>
-    <button class="textarea1_case_sign" bindtap="click_favo">
+    <button class="textarea1_case_sign" bindtap="submit_summary">
       <view>提交活动文档</view>
     </button>
+  </view>
+
+</view>
+<view class="bottom {{showView?'bright789_view_hide':'bright789_view_show'}}">
+
+  <view class="bottom-beta-box">
+    <button class="textarea1_case_sign" bindtap="pass">
+      <view>同意</view>
+    </button>
+    <button class="textarea1_case_sign3" bindtap="refuse">
+      <view>驳回</view>
+    </button>
+  </view>
   </view>
 
 </view>

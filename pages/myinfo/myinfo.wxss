@@ -397,3 +397,10 @@ html, body {
   z-index: 1000;
   color: #fff;
 }
+/* 显示与隐藏 */
+.bright789_view_hide{
+ display: none;
+}
+.bright789_view_show{
+ display: block;
+}

@@ -16,7 +16,6 @@ Page({
   },
 
   onLoad() {
-    var self = this;
     this.getAll();
     this.fetchPostsData();
   },
@@ -33,7 +32,6 @@ Page({
 
   //获取总的发起数
   getAll: function () {
-    self = this;
     var self = this;
     //获取详询活动信息
     var Diary = Bmob.Object.extend("Events");
@@ -45,10 +43,9 @@ Page({
 
     }
     if (my_auth == 0) {
-      query.equalTo("status", 1)
-
+      query.equalTo("status", 0)
      } else {
-      query.equalTo("status", 1)
+      query.equalTo("status", 0)
       query.equalTo("publisher", wx.getStorageSync("user_id"));
     }
     query.count({
@@ -57,13 +54,10 @@ Page({
         var endPage = 0;
         if (count % self.data.limitPage == 0) { //如果总数的为偶数
           totalPage = parseInt(count / self.data.limitPage);
-          console.log("ou", totalPage)
         } else {
           var lowPage = parseInt(count / self.data.limitPage);
           endPage = count - (lowPage * self.data.limitPage);
           totalPage = lowPage + 1;
-          console.log("ji", totalPage)
-
         }
         self.setData({
           totalCount: count,
@@ -90,13 +84,11 @@ Page({
     //一秒后关闭加载提示框
     setTimeout(function () {
       wx.hideLoading()
-    }, 1000)
+    }, 800)
     var self = this
     self.setData({
       currentPage: self.data.currentPage + 1
     });
-    console.log("当前页" + self.data.currentPage);
-    console.log("encpage", self.data.endPage)
     //先判断是不是最后一页
     if (self.data.currentPage + 1 >= self.data.totalPage) {
       self.setData({
@@ -114,7 +106,7 @@ Page({
   },
 
   onShow: function () {
-
+    this.onLoad()
   },
 
   //获取首页列表文章
@@ -140,6 +132,7 @@ Page({
     query.find({
       success: function (results) {
         for (var i = 0; i < results.length; i++) {
+          console.log(results[i].get("title"))
           var publisherId = results[i].get("publisher").objectId;
           var title = results[i].get("title");
           var content = results[i].get("content");
@@ -170,9 +163,10 @@ Page({
 
           }
           molist.push(jsonA);
+          
         }
         self.onSetData(molist, self.data.currentPage);
-
+        console.log("todo\t"+molist.length)
         setTimeout(function () {
           wx.hideLoading();
         }, 900);

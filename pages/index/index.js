@@ -60,6 +60,7 @@ Page({
 
   onShow: function (e) {
     this.getAll();
+    this.onLoad();
     this.setData({
       userInfo: app.userInfo
     })
@@ -106,11 +107,18 @@ Page({
           endPage: endPage,
           totalPage: totalPage
         })
+        if (self.data.currentPage + 1 >= self.data.totalPage) {
+          self.setData({
+            isEmpty: true
+          })
+        }
         console.log("共有" + count + " 条记录");
         console.log("共有" + totalPage + "页");
         console.log("最后一页加载" + endPage + "条");
       },
-    });
+    }
+    
+    );
   },
 
   //获取首页列表文章

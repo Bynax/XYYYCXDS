@@ -8,7 +8,7 @@ Page({
   data: {
     postsList: [], //总的活动
     currentPage: 0, //要跳过查询的页数
-    limitPage: 3,
+    limitPage: 6,
     isEmpty: false, //当前查询出来的数据是否为空
     totalCount: 0, //总活动数量
     endPage: 0, //最后一页加载多少条

@@ -321,7 +321,7 @@ Page({
             success: function(result) {
               result.set("title", title);
               result.set("endtime", endtime);
-              result.set("acttype", acttype + "");
+              result.set("acttype", acttype);
               if (that.data.upadnew) { //如果改变了地点
                 result.set("address", address);
                 result.set("longitude", longitude); //经度
@@ -329,11 +329,11 @@ Page({
               }
               if (that.data.peopleHide) { //如果设置了人数
                 console.log(peoplenum);
-                result.set("peoplenum", peoplenum);
+                result.set("num_limit", peoplenum);
               } else if (!that.data.peopleHide) {
-                result.set("peoplenum", "-1");
+                result.set("num_limit", "-1");
               }
-              result.set("content", content);
+              result.set("discription", content);
               //修改操作
               result.save(null, {
                 success: function(result) {

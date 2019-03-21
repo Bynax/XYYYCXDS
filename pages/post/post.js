@@ -153,21 +153,7 @@ Page({
         isdisabled: false
       })
       return true;
-    } else {
-      wx.showModal({
-        title: '提示',
-        content: '您没有访问权限！',
-        showCancel: false,
-        success: function(e) {
-          if (true) {
-            wx.switchTab({
-              url: '../index/index',
-            });
-          }
-        }
-      })
-      return false
-    }
+    } 
   },
 
   /**
@@ -183,6 +169,22 @@ Page({
   onShow: function() {
     var tag = this.onLoad()
     console.log(tag)
+    my_auth = wx.getStorageSync("my_auth")
+    if (my_auth != 0 && my_auth != 1) {
+    wx.showModal({
+      title: '提示',
+      content: '您没有访问权限！',
+      showCancel: false,
+      success: function (e) {
+        if (true) {
+          wx.switchTab({
+            url: '../index/index',
+          });
+        }
+      }
+    })
+      return false
+  }
     if (tag) {
       var myInterval = setInterval(getReturn, 500); ////半秒定时查询
       function getReturn() {
@@ -398,7 +400,8 @@ Page({
                   contact.set("event", event);
                   contact.set("contactWay", contactWay);
                   contact.set("contactValue", contactValue);
-                  contact.set("realName",realname);
+                  console.log("realname"+realname)
+                  contact.set("realname",realname);
                   contact.save();
                 },
               })

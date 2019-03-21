@@ -1,7 +1,6 @@
 //login.js
 //获取应用实例
 wx.clearStorage();
-console.log("hello world")
 var Bmob = require("../../utils/bmob.js");
 Bmob.initialize("b50831e8a77f6b9a3b0cf69e4eb3806c", "10de7e320051c765fb8a341cc7cd720c");
 var app = getApp();
@@ -41,8 +40,6 @@ Page({
                         Bmob.User.logIn(nickName, userData.openid, {
                           success: function(user) {
                             try {
-                              console.log(user.get('userData').openid)
-                              console.log(user.id)
                               wx.setStorageSync('user_openid', user.get('userData').openid)
                               wx.setStorageSync('user_id', user.id)
                               wx.setStorageSync('my_nick', user.get("nickname"))

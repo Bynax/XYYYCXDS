@@ -20,6 +20,11 @@
     "navigationBarTitleText": "苑级活动",
     "backgroundColor": "#000ff"
   },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "您的位置信息将用于活动地点的选择"
+    }
+  },
   "tabBar": {
     "color": "#9BABBA",
     "selectedColor": "#495056",

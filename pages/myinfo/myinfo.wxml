@@ -7,7 +7,7 @@
         <text>{{my_nick}}</text>
       </view>
     </view>
-    <view class="thirdblock" style='margin-top:40px;'>
+    <view class="thirdblock {{showView?'bright789_view_show':'bright789_view_hide'}}" style='margin-top:40px;'>
       <view class="itemself" bindtap="click_myLaunch" data-index="1">
         <image src="/static/images/icon/all.png" class="itemself_ico"></image>
         <span>全部活动</span>

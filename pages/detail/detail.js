@@ -4,10 +4,13 @@ var util = require('../../utils/util.js');
 import { $wuxButton } from '../../components/wux'
 var app = getApp();
 var that;
+var showView;
 var optionId; //活动的Id
 var publisherId; //活动发布者的Id
 Page({
   data: {
+    showView:true,
+    showViewall:true,
     accounts: ["手机号", "微信号", "QQ号"],
     accountIndex: 0,
     actStatusArray: ["准备中", "进行中", "已结束"],
@@ -76,6 +79,17 @@ Page({
   onLoad: function (options) {
     that = this;
     var openid = wx.getStorageSync("user_openid");
+    var auth = wx.getStorageSync("my_auth");
+    if (auth == 2) {
+      that.setData({ showViewall: false });
+    }
+    if(auth==1){
+      that.setData({ showView: true});
+    }else if(auth==0){
+      that.setData({ showView: false });
+    }
+    
+    // console.log("show:"+showView)
     optionId = options.actid;
     publisherId = options.pubid;
     wx.getStorage({ //判断当前发布人是不是自己
@@ -103,6 +117,15 @@ Page({
    */
   onShow: function () {
     var myInterval = setInterval(getReturn, 500);//半秒定时查询
+    var auth = wx.getStorageSync("my_auth");
+    if (auth == 2) {
+      that.setData({ showViewall: false });
+    }
+    if (auth == 1) {
+      that.setData({ showView: true })
+    } else if(auth==0) {
+      that.setData({ showView: false });
+    }
     function getReturn() {
       wx.getStorage({
         key: 'user_id',
@@ -173,6 +196,22 @@ Page({
         },
       })
     }
+  },
+
+  submit_summary:function(){
+    wx.showModal({
+      title: '提示',
+      content: '此功能待完善！',
+      showCancel: false,
+      success: function (e) {
+        // if (true) {
+        //   wx.switchTab({
+        //     url: '../index/index',
+        //   });
+        // }
+      }
+    })
+console.log("hello")
   },
 
   //----------------------------------
@@ -308,20 +347,20 @@ Page({
         result.set("Status", Number(statusIndex));
         result.set("Statusname", Statusname);
         result.save();
-        if (Statusname == "已结束") { //如果活动状态为已结束，该活动将撤离首页
-          var Events = Bmob.Object.extend("Events");
-          var evnet = new Bmob.Query(Events);
-          evnet.get(optionId, {
-            success: function (result) {
-              result.set("isShow", 0);
-              result.save();
-              console.log("撤离成功");
-            },
-            error: function (object, error) {
-              console.log("撤离失败" + error);
-            }
-          });
-        }
+        // if (Statusname == "已结束") { //如果活动状态为已结束，该活动将撤离首页
+        //   var Events = Bmob.Object.extend("Events");
+        //   var evnet = new Bmob.Query(Events);
+        //   evnet.get(optionId, {
+        //     success: function (result) {
+        //       result.set("isShow", 0);
+        //       result.save();
+        //       console.log("撤离成功");
+        //     },
+        //     error: function (object, error) {
+        //       console.log("撤离失败" + error);
+        //     }
+        //   });
+        // }
         that.setData({
           showStuDialog: false
         })
@@ -433,21 +472,73 @@ Page({
      console.log("hello")
     let actid = optionId;
     let pubid = publisherId;
-    console.log("actid\t"+actid+"pubid\d"+pubid)
+    console.log("actid1\t"+actid+"pubid\d"+pubid)
     if(this.data.isMe) { //如果是当前用户的发起
       wx.navigateTo({
         url: '/pages/updAct/updAct?actid=' + actid + "&pubid=" + pubid,
       })
     } else {
+      wx.showModal({
+        title: '提示',
+        content: '您没有修改权限！',
+        showCancel: false,
+        success: function (e) {
+          // if (true) {
+          //   wx.switchTab({
+          //     url: '../index/index',
+          //   });
+          // }
+        }
+      })
       this.setData({
         showUpdDialog: true
       })
     }
   },
 
+  pass:function(){
+    var Diary = Bmob.Object.extend("Events");
+    var query = new Bmob.Query(Diary);
+    console.log("optionid"+optionId)
+    query.get(optionId,{
+      success: function (result) {
+        // 回调中可以取得这个 diary 对象的一个实例，然后就可以修改它了
+        console.log("success")
+        result.set('status', 1);
+        result.save();
+      },
+      error: function (object, error) {
+        console.log("fail")
+
+      }
+    }); 
+
+
+  },
+  
+  refuse:function(){
+    var Diary = Bmob.Object.extend("Events");
+    var query = new Bmob.Query(Diary);
+    query.equalTo("objectId", optionId);
+    console.log("refuse")
+    query.get({
+      success: function (result) {
+        // 回调中可以取得这个 diary 对象的一个实例，然后就可以修改它了
+        result.set('status', 2);
+        result.save();
+        console.log("refuse success");
+      },
+      error: function (object, error) {
+        console.log(" refuse fail");
+      }
+    }); 
+
+  },
+
+
   //-----------------------------------------------------------------------------
   //删除活动
-  deleteEvent: function () {
+  deleteEvent:function () {
     wx.showModal({
       title: '是否删除该活动?',
       content: '删除后将不能恢复',

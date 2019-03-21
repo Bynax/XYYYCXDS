@@ -366,6 +366,21 @@ float: right;
   justify-content: center;
   padding: 0;
 }
+.textarea1_case_sign3{
+  font-size: 34rpx;
+  letter-spacing: -1rpx;
+  color: rgb(255, 255, 255);
+  background-color: #ff1111;
+  height: 60rpx;
+  width: 200rpx;
+  border-radius: 50rpx;
+  margin-right: 50rpx;
+  margin-left: 50rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
 .textarea1_case_sign2 {
   margin-right: 50rpx;
   margin-left: 50rpx;
@@ -1200,4 +1215,11 @@ float: right;
   min-height:2.58823529em;
   line-height:2.58823529em;
   border-left:1rpx solid #d9d9d9;
+}
+/* 显示与隐藏 */
+.bright789_view_hide{
+ display: none;
+}
+.bright789_view_show{
+ display: block;
 }

@@ -5,6 +5,7 @@ var util = require('../../utils/util.js');
 var app = getApp()
 var curIndex = 0;
 var that;
+var showView;
 const MENU_WIDTH_SCALE = 0.82;
 const FAST_SPEED_SECOND = 300;
 const FAST_SPEED_DISTANCE = 5;
@@ -13,6 +14,7 @@ var my_auth ;
 
 Page({
   data: {
+    showView: true,
     my_nick:"",
     my_avatar:"",
     userInfo: [],
@@ -31,7 +33,13 @@ Page({
   },
 
   onLoad:function() {
+    that = this;
     my_auth = wx.getStorageSync('my_auth')
+    if ((my_auth == 1)||(my_auth == 0)) {
+      that.setData({ showView: true })
+    } else {
+      that.setData({ showView: false });
+    }
     this.setData({
       my_nick:wx.getStorageSync("my_nick"),
       my_avatar:wx.getStorageSync("my_avatar")
