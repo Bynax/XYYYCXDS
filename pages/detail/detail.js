@@ -13,13 +13,11 @@ Page({
     showViewall:true,
     accounts: ["手机号", "微信号", "QQ号"],
     accountIndex: 0,
-    actStatusArray: ["准备中", "进行中", "已结束"],
     statusIndex: 0,
     realname: "",
     contactValue: "",
     showTopTips: false, //是否显示提示
     TopTips: '', //提示的内容
-
     //----------------
     tag_select: 0,
     limit: 5,
@@ -211,7 +209,6 @@ Page({
         // }
       }
     })
-console.log("hello")
   },
 
   //----------------------------------
@@ -261,31 +258,6 @@ console.log("hello")
 
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-    console.log(this.data.listTitle);
-    return {
-      title: this.data.listTitle,
-      path: '/pages/detail/detail?actid=' + optionId + "&pubid" + publisherId,
-      imageUrl: this.data.istPic,
-      success: function (res) {
-        // 转发成功
-        wx.showToast({
-          title: '转发成功',
-          icon: 'success'
-        });
-      },
-      fail: function (res) {
-        // 转发失败
-        wx.showToast({
-          title: '转发失败',
-          icon: 'fail'
-        });
-      }
-    }
-  },
 
 
   //关闭弹出联系表单
@@ -329,50 +301,7 @@ console.log("hello")
     })
   },
 
-  //改变活动状态操作
-  stuSubmit: function (event) {
-    var statusIndex = that.data.statusIndex;
-    if (statusIndex == 0) {
-      var Statusname = "准备中";
-    } else if (statusIndex == 1) {
-      var Statusname = "进行中";
-    } else if (statusIndex == 2) {
-      var Statusname = "已结束";
-    }
-    var Diary = Bmob.Object.extend("EventMore");
-    var query = new Bmob.Query(Diary);
-
-    query.get(eventMoreId, {
-      success: function (result) {
-        result.set("Status", Number(statusIndex));
-        result.set("Statusname", Statusname);
-        result.save();
-        // if (Statusname == "已结束") { //如果活动状态为已结束，该活动将撤离首页
-        //   var Events = Bmob.Object.extend("Events");
-        //   var evnet = new Bmob.Query(Events);
-        //   evnet.get(optionId, {
-        //     success: function (result) {
-        //       result.set("isShow", 0);
-        //       result.save();
-        //       console.log("撤离成功");
-        //     },
-        //     error: function (object, error) {
-        //       console.log("撤离失败" + error);
-        //     }
-        //   });
-        // }
-        that.setData({
-          showStuDialog: false
-        })
-        console.log("改变状态成功");
-        common.dataLoading("改变成功", "success");
-      },
-      error: function (object, error) {
-        console.log("改变状态失败" + error);
-      }
-    });
-    that.onShow();
-  },
+  
 
 
   //修改联系信息操作
@@ -504,8 +433,13 @@ console.log("hello")
       success: function (result) {
         // 回调中可以取得这个 diary 对象的一个实例，然后就可以修改它了
         console.log("success")
-        result.set('status', 1);
+        result.set('status', 3);
         result.save();
+        common.dataLoading("修改成功", "success", function () {
+          wx.navigateBack({
+            delta: 1
+          })
+        })
       },
       error: function (object, error) {
         console.log("fail")
@@ -519,63 +453,22 @@ console.log("hello")
   refuse:function(){
     var Diary = Bmob.Object.extend("Events");
     var query = new Bmob.Query(Diary);
-    query.equalTo("objectId", optionId);
-    console.log("refuse")
-    query.get({
+    //query.equalTo("objectId", optionId);
+    query.get(optionId,{
       success: function (result) {
         // 回调中可以取得这个 diary 对象的一个实例，然后就可以修改它了
-        result.set('status', 2);
+        result.set('status', 3);
         result.save();
         console.log("refuse success");
+        common.dataLoading("修改成功", "success", function () {
+         
+        })
       },
       error: function (object, error) {
         console.log(" refuse fail");
       }
     }); 
 
-  },
-
-
-  //-----------------------------------------------------------------------------
-  //删除活动
-  deleteEvent:function () {
-    wx.showModal({
-      title: '是否删除该活动?',
-      content: '删除后将不能恢复',
-      showCancel: true,
-      confirmColor: "#a07c52",
-      cancelColor: "#646464",
-      success: function (res) {
-        if (res.confirm) {
-          //删除此活动后返回上一页
-          var Diary = Bmob.Object.extend("Events");
-          var queryEvent = new Bmob.Query(Diary);
-          queryEvent.get(optionId, {
-            success: function (result) {
-              result.destroy({
-                //删除成功
-                success: function (myObject) {
-                  common.dataLoading("删除成功", "success", function () {
-                    wx.navigateBack({
-                      delta: 1
-                    })
-                  });
-                },
-                //删除失败
-                error: function (myObject, error) {
-                  console.log(error);
-                }
-              })
-            },
-            error: function (object, error) {
-              console.log(error);
-            }
-          });
-        } else {
-
-        }
-      }
-    })
   },
 }),
 

@@ -33,7 +33,7 @@ App({
   globalData: {
     userInfo: null,
     user:null,
-    statusL:["审核中","进行中","结束"]
+    statusL:["审核中","进行中","已完成","审核未通过"]
   },
   onPullDownRefresh: function() {
     //wx.stopPullDownRefresh()
