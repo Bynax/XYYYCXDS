@@ -46,6 +46,7 @@ Page({
 
   onLoad(t) {
     var self = this;
+    this.getAll();
     this.fetchPostsData();
     try {
       let res = wx.getSystemInfoSync()
@@ -59,7 +60,6 @@ Page({
   },
 
   onShow: function (e) {
-    this.getAll();
     this.onLoad();
     this.setData({
       userInfo: app.userInfo
@@ -85,7 +85,17 @@ Page({
     });
     console.log("this.data.postList",this.data.postsList, page);
   },
-
+  onPullDownRefresh: function () {
+    wx.showNavigationBarLoading()
+    console.log("shouye")
+    this.refresh();
+    //模拟加载
+    setTimeout(function () {
+      // complete
+      wx.hideNavigationBarLoading()
+      wx.stopPullDownRefresh()
+    }, 1500);
+  },
   //获取总的活动数
   getAll: function () {
     self = this;
@@ -266,44 +276,9 @@ Page({
   },
 
 
-
-
-
-  //--------------------------------------------------------------------------------------------------------
-  handlerMove(e) {
-    let { clientX } = e.touches[0];
-    let { ui } = this.data;
-    let offsetX = this.startX - clientX;
-    this.startX = clientX;
-    ui.offsetLeft -= offsetX;
-    if (ui.offsetLeft <= 0) {
-      ui.offsetLeft = 0;
-    } else if (ui.offsetLeft >= ui.menuWidth) {
-      ui.offsetLeft = ui.menuWidth;
-    }
-    this.setData({ ui: ui })
-
-  },
-  handlerCancel(e) {
-    // console.log(e);
-  },
-  
-  handlerPageTap(e) {
-    let { ui } = this.data;
-    if (ui.offsetLeft != 0) {
-      ui.offsetLeft = 0;
-      this.setData({ ui: ui })
-
-    }
-  },
-  handlerAvatarTap(e) {
-    let { ui } = this.data;
-    if (ui.offsetLeft == 0) {
-      ui.offsetLeft = ui.menuWidth;
-      this.setData({ ui: ui })
-    }
-  },
 })
+
+
 
 //根据活动类型获取活动类型名称
 function getTypeName(acttype) {

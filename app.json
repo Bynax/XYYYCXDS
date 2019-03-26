@@ -18,7 +18,8 @@
     "navigationBarTextStyle": "white",
     "navigationBarBackgroundColor": "#118fff",
     "navigationBarTitleText": "苑级活动",
-    "backgroundColor": "#000ff"
+    "backgroundColor": "#000ff",
+    "enablePullDownRefresh": true
   },
   "permission": {
     "scope.userLocation": {

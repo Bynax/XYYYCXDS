@@ -110,7 +110,7 @@ Page({
   },
 
   onShow: function() {
-
+    this.onLoad();
   },
 
   //获取首页列表文章
@@ -175,6 +175,16 @@ Page({
         console.log(error)
       }
     })
+  },
+
+  onPullDownRefresh: function () {
+    this.onShow();
+    //模拟加载
+    setTimeout(function () {
+      wx.stopPullDownRefresh()
+
+      // complete
+    }, 1500);
   },
   // 点击活动进入活动详情页面
   click_activity: function(e) {

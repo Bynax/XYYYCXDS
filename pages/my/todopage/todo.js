@@ -106,7 +106,7 @@ Page({
   },
 
   onShow: function () {
-    this.onLoad()
+    this.fetchPostsData();
   },
 
   //获取首页列表文章
@@ -135,11 +135,11 @@ Page({
           console.log(results[i].get("title"))
           var publisherId = results[i].get("publisher").objectId;
           var title = results[i].get("title");
-          var content = results[i].get("content");
+          var content = results[i].get("discription");
           var acttype = results[i].get("acttype");
           var endtime = results[i].get("endtime");
           var address = results[i].get("address");
-          var peoplenum = results[i].get("peoplenum");
+          var peoplenum = results[i].get("num_limit");
           var id = results[i].id;
           var createdAt = results[i].createdAt;
           var pubtime = util.getDateDiff(createdAt);
@@ -186,4 +186,13 @@ Page({
     });
   },
 
+onPullDownRefresh:function(){
+  this.onShow();
+  //模拟加载
+  setTimeout(function () {
+    // complete
+    wx.stopPullDownRefresh()
+
+  }, 1500);
+}
 })

@@ -112,6 +112,7 @@ Page({
   },
 
   onShow: function () {
+    this.onLoad();
 
   },
 
@@ -181,6 +182,15 @@ Page({
         console.log(error)
       }
     })
+  },
+  onPullDownRefresh: function () {
+    this.onShow();
+    //模拟加载
+    setTimeout(function () {
+      // complete
+      wx.stopPullDownRefresh()
+
+    }, 1500);
   },
   // 点击活动进入活动详情页面
   click_activity: function (e) {

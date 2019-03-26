@@ -365,6 +365,8 @@ Page({
           var Diary = Bmob.Object.extend("Events");
           var diary = new Diary();
           var me = new Bmob.User();
+          var Contacts = Bmob.Object.extend("Contacts");
+          var contact = new Contacts();
           me.id = ress.data;
           diary.set("title", title);
           diary.set("endtime", endtime);
@@ -381,6 +383,7 @@ Page({
           diary.set("status", 0)
           diary.set("discription", discription);
           diary.set("publisher", me);
+          diary.set("contact",contact)
 
           //新增操作
           diary.save(null, {
@@ -389,15 +392,10 @@ Page({
               wx.getStorage({
                 key: 'user_id',
                 success: function(ress) {
-                  var Contacts = Bmob.Object.extend("Contacts");
-                  var contact = new Contacts();
-                  var Events = Bmob.Object.extend("Events");
-                  var event = new Events();
-                  event.id = result.id;
                   var me = new Bmob.User();
                   me.id = ress.data;
                   contact.set("publisher", me); //发布人是自己
-                  contact.set("event", event);
+                  //contact.set("event", event);
                   contact.set("contactWay", contactWay);
                   contact.set("contactValue", contactValue);
                   console.log("realname"+realname)
@@ -451,7 +449,6 @@ Page({
           })
         },
       })
-      console.log("发布成功");
       that.setData({
         isLoading: false,
         isdisabled: false,
@@ -510,6 +507,14 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
+    wx.showNavigationBarLoading() //在标题栏中显示加载
+    this.onShow();
+    //模拟加载
+    setTimeout(function () {
+      // complete
+      wx.hideNavigationBarLoading() //完成停止加载
+      wx.stopPullDownRefresh() //停止下拉刷新
+    }, 1500);
 
   },
 

@@ -1,7 +1,6 @@
 <!-- index.wxml -->
 <import src="../template/activity/common-list.wxml" />
 <view>
-  <scroll-view bindscroll="" scroll-y style="height: 100%;">
     <view class="search">
       <view class="avatar">
         <image src=""></image>
@@ -14,7 +13,6 @@
       </view>
 
     </view>
-
 
     <view class="container">
       <view wx:if="{{postsList.length == 0}}">
@@ -37,5 +35,4 @@
         </view>
       </view>
     </view>
-  </scroll-view>
 </view>

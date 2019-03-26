@@ -9,8 +9,8 @@ var optionId; //活动的Id
 var publisherId; //活动发布者的Id
 Page({
   data: {
-    showView:true,
-    showViewall:true,
+    showView: true,
+    showViewall: true,
     accounts: ["手机号", "微信号", "QQ号"],
     accountIndex: 0,
     statusIndex: 0,
@@ -81,12 +81,12 @@ Page({
     if (auth == 2) {
       that.setData({ showViewall: false });
     }
-    if(auth==1){
-      that.setData({ showView: true});
-    }else if(auth==0){
+    if (auth == 1) {
+      that.setData({ showView: true });
+    } else if (auth == 0) {
       that.setData({ showView: false });
     }
-    
+
     // console.log("show:"+showView)
     optionId = options.actid;
     publisherId = options.pubid;
@@ -121,7 +121,7 @@ Page({
     }
     if (auth == 1) {
       that.setData({ showView: true })
-    } else if(auth==0) {
+    } else if (auth == 0) {
       that.setData({ showView: false });
     }
     function getReturn() {
@@ -196,7 +196,7 @@ Page({
     }
   },
 
-  submit_summary:function(){
+  submit_summary: function () {
     wx.showModal({
       title: '提示',
       content: '此功能待完善！',
@@ -221,7 +221,7 @@ Page({
       publishContent: e.detail.value
     })
   },
-  
+
 
   //查看活动地图位置
   viewActAddress: function () {
@@ -301,7 +301,7 @@ Page({
     })
   },
 
-  
+
 
 
   //修改联系信息操作
@@ -397,12 +397,12 @@ Page({
       });
     }, 1000);
   },
-   modify_info:function(){
-     console.log("hello")
+  modify_info: function () {
+    console.log("hello")
     let actid = optionId;
     let pubid = publisherId;
-    console.log("actid1\t"+actid+"pubid\d"+pubid)
-    if(this.data.isMe) { //如果是当前用户的发起
+    console.log("actid1\t" + actid + "pubid\d" + pubid)
+    if (this.data.isMe) { //如果是当前用户的发起
       wx.navigateTo({
         url: '/pages/updAct/updAct?actid=' + actid + "&pubid=" + pubid,
       })
@@ -425,63 +425,64 @@ Page({
     }
   },
 
-  pass:function(){
+  pass: function () {
     var Diary = Bmob.Object.extend("Events");
     var query = new Bmob.Query(Diary);
-    console.log("optionid"+optionId)
-    query.get(optionId,{
+    console.log("optionid" + optionId)
+    query.get(optionId, {
       success: function (result) {
         // 回调中可以取得这个 diary 对象的一个实例，然后就可以修改它了
         console.log("success")
-        result.set('status', 3);
+        result.set('status', 1);
         result.save();
-        common.dataLoading("修改成功", "success", function () {
-          wx.navigateBack({
-            delta: 1
-          })
+        common.dataLoading("成功通过该活动", "success", function () {
+
         })
       },
       error: function (object, error) {
-        console.log("fail")
+        common.dataLoading("服务器异常，请稍后再试", "success", function () {
 
+        })
       }
-    }); 
+    });
 
 
   },
-  
-  refuse:function(){
+
+  refuse: function () {
     var Diary = Bmob.Object.extend("Events");
     var query = new Bmob.Query(Diary);
     //query.equalTo("objectId", optionId);
-    query.get(optionId,{
+    query.get(optionId, {
       success: function (result) {
         // 回调中可以取得这个 diary 对象的一个实例，然后就可以修改它了
         result.set('status', 3);
         result.save();
         console.log("refuse success");
-        common.dataLoading("修改成功", "success", function () {
-         
+        common.dataLoading("成功驳回该活动", "success", function () {
+
         })
       },
       error: function (object, error) {
-        console.log(" refuse fail");
+        common.dataLoading("服务器异常，请稍后再试", "success", function () {
+
+        })
       }
-    }); 
+    });
 
   },
 }),
 
 
 
-//根据联系方式确定序号
-function getContactIndex(name) {
-  var accountIndex = 0;
-  if (name == "手机号") accountIndex = 0;
-  else if (name == "微信号") accountIndex = 1;
-  else if (name == "QQ号") accountIndex = 2;
-  return accountIndex;
-}
+  //根据联系方式确定序号
+  function getContactIndex(name) {
+    var accountIndex = 0;
+    if (name == "手机号") accountIndex = 0;
+    else if (name == "微信号") accountIndex = 1;
+    else if (name == "QQ号") accountIndex = 2;
+    return accountIndex;
+  }
 
 //根据活动类型获取活动类型名称
 function getTypeName(acttype) {
